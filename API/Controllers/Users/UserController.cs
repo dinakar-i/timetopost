@@ -14,24 +14,9 @@ namespace API.Controllers.Users
             _context = context;
         }
 
-        // GET: api/users
-        [HttpGet]
-        public IActionResult GetUsers()
-        {
-            var users = _context.Users
-                .Select(u => new
-                {
-                    u.Id,
-                    u.FullName,
-                    u.Email
-                })
-                .ToList();
-
-            return Ok(users);
-        }
 
         // GET: api/users/details
-        [HttpGet("details")]
+        [HttpGet]
         public IActionResult GetUsersWithOrgRoles()
         {
             var users = _context.Users
