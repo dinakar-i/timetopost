@@ -7,7 +7,7 @@ namespace Core.Organizations;
 // {
 //     Viewer, Editor, Admin, Owner
 // }
-[Table("userorganizationrole")]
+[Table("userorganizationroles")]
 public class UserOrganizationRole
 {
     public int Id { get; set; }

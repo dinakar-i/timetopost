@@ -6,7 +6,7 @@ namespace Core.Platforms;
 // {
 //     Facebook, Instagram, Twitter, LinkedIn, YouTube
 // }
-[Table("platformAccount")]
+[Table("platformaccounts")]
 public class PlatformAccount
 {
     public int Id { get; set; }

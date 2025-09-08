@@ -4,7 +4,7 @@ using Core.Organizations;
 using Core.Platforms;
 namespace Core;
 
-[Table("organization")]
+[Table("organizations")]
 public class Organization
 {
     public int Id { get; set; }
