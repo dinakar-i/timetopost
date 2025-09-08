@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Organizations;
 
@@ -6,6 +7,7 @@ namespace Core.Organizations;
 // {
 //     Viewer, Editor, Admin, Owner
 // }
+[Table("userorganizationrole")]
 public class UserOrganizationRole
 {
     public int Id { get; set; }

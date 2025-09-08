@@ -1,8 +1,10 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Organizations;
 using Core.Platforms;
 namespace Core;
 
+[Table("organization")]
 public class Organization
 {
     public int Id { get; set; }

@@ -1,11 +1,12 @@
 using System;
-
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Core.Platforms;
 
 // public enum PlatformType
 // {
 //     Facebook, Instagram, Twitter, LinkedIn, YouTube
 // }
+[Table("platformAccount")]
 public class PlatformAccount
 {
     public int Id { get; set; }
