@@ -15,3 +15,4 @@ D:\dotnet Learnings\timetopost\Infrastructure\obj\Debug\net8.0\refint\Infrastruc
 D:\dotnet Learnings\timetopost\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 D:\dotnet Learnings\timetopost\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 D:\dotnet Learnings\timetopost\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+D:\dotnet Learnings\timetopost\Infrastructure\obj\Debug\net8.0\Infrastructure.sourcelink.json

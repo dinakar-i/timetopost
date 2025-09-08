@@ -146,3 +146,4 @@ D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\Tweetinvi.Security.dll
 D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\Tweetinvi.Streams.dll
 D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\Tweetinvi.WebLogic.dll
 D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\Tweetinvi.dll
+D:\dotnet Learnings\timetopost\api\obj\Debug\net8.0\API.sourcelink.json

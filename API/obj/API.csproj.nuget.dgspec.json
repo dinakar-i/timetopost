@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\dotnet Learnings\\timetopost\\API\\API.csproj": {}
+    "D:\\dotnet Learnings\\timetopost\\api\\API.csproj": {}
   },
   "projects": {
-    "D:\\dotnet Learnings\\timetopost\\API\\API.csproj": {
+    "D:\\dotnet Learnings\\timetopost\\api\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\dotnet Learnings\\timetopost\\API\\API.csproj",
+        "projectUniqueName": "D:\\dotnet Learnings\\timetopost\\api\\API.csproj",
         "projectName": "API",
-        "projectPath": "D:\\dotnet Learnings\\timetopost\\API\\API.csproj",
+        "projectPath": "D:\\dotnet Learnings\\timetopost\\api\\API.csproj",
         "packagesPath": "C:\\Users\\DINA MEDIA\\.nuget\\packages\\",
-        "outputPath": "D:\\dotnet Learnings\\timetopost\\API\\obj\\",
+        "outputPath": "D:\\dotnet Learnings\\timetopost\\api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\DINA MEDIA\\AppData\\Roaming\\NuGet\\NuGet.Config"

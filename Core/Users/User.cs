@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Organizations;
 namespace Core;
 
+[Table("users")]
 public class User
 {
 
