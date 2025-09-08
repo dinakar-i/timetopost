@@ -31,11 +31,11 @@ builder.Services.AddCors(options =>
     });
 });
 var app = builder.Build();
-app.UseHttpsRedirection();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseHttpsRedirection();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
