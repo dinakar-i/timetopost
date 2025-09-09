@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Core.Organizations;
 
-// public enum OrganizationRole
-// {
-//     Viewer, Editor, Admin, Owner
-// }
+public enum OrganizationRole
+{
+    Viewer, Editor, Admin, Owner
+}
 [Table("userorganizationroles")]
 public class UserOrganizationRole
 {
