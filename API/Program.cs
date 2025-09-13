@@ -38,12 +38,29 @@ builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-}).AddCookie().AddGoogle(options =>
+}).AddCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Lax;  // ← Crucial
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;  // Ensure HTTPS
+}).AddGoogle(options =>
 {
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.ClientId = "804907982754-20ismbef2m7ekqjnobns2c8f99dfro36.apps.googleusercontent.com";
-    options.ClientSecret = "MjwS6Ye7XQ0m2m4kXJTWRsoHadWQ";
+    options.ClientSecret = "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";
+    options.CallbackPath = "/signin-google";
 });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/account/login";             // Where to go to sign in
+    options.LogoutPath = "/account/logout";
+    options.AccessDeniedPath = "/account/forbidden";
+    options.Events.OnSignedIn = context =>
+    {
+        // Optional: Custom logic after sign in
+        return Task.CompletedTask;
+    };
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

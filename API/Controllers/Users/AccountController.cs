@@ -2,38 +2,62 @@ using Autofac.Features.ResolveAnything;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Users
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    // [Route("api/[controller]")]
+    // [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpGet("Login")]
-        public async Task Login()
+        // Step 1️⃣: Trigger Google Login
+        [HttpGet("signin")]
+        public IActionResult Login()
         {
-            await HttpContext.ChallengeAsync(GoogleDefaults.AuthenticationScheme, new AuthenticationProperties
+            var properties = new AuthenticationProperties
             {
-                RedirectUri = Url.Action("GoogleResponse")
-            });
+                RedirectUri = Url.Action("GoogleResponse") // After login, go here
+            };
+
+            return Challenge(properties, GoogleDefaults.AuthenticationScheme);
         }
-        private async Task<IActionResult> GoogleResponse()
+
+        // Step 2️⃣: Handle Google OAuth Callback
+        [HttpGet("GoogleResponse")]
+        public async Task<IActionResult> GoogleResponse()
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            if (!result.Succeeded)
+
+            if (!result.Succeeded || result.Principal == null)
             {
                 return Forbid();
             }
-            var claims = result.Principal?.Identities?.FirstOrDefault()?.Claims.Select(claim => new
+
+            var email = result.Principal.FindFirst(ClaimTypes.Email)?.Value;
+            var name = result.Principal.FindFirst(ClaimTypes.Name)?.Value;
+            var accessToken = result.Properties.GetTokenValue("access_token");
+
+            // You can save user info in your database here if needed
+
+            return Ok(new
             {
-                claim.Issuer,
-                claim.OriginalIssuer,
-                claim.Type,
-                claim.Value,
+                Email = email,
+                Name = name,
+                AccessToken = accessToken
             });
-            return Ok();
+
+            // Or redirect to home page after login:
+            // return RedirectToAction("Index", "Home");
         }
+
+        // Step 3️⃣: Logout
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }
