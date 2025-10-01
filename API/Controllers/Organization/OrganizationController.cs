@@ -1,10 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-using Core;
 using Core.Organizations;
 using Infrastructure;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers.Organization

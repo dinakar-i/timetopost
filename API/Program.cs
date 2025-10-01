@@ -49,17 +49,17 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = "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";
     options.CallbackPath = "/signin-google";
 });
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = "/account/login";             // Where to go to sign in
-    options.LogoutPath = "/account/logout";
-    options.AccessDeniedPath = "/account/forbidden";
-    options.Events.OnSignedIn = context =>
-    {
-        // Optional: Custom logic after sign in
-        return Task.CompletedTask;
-    };
-});
+// builder.Services.ConfigureApplicationCookie(options =>
+// {
+//     options.LoginPath = "/account/login";             // Where to go to sign in
+//     options.LogoutPath = "/account/logout";
+//     options.AccessDeniedPath = "/account/forbidden";
+//     options.Events.OnSignedIn = context =>
+//     {
+//         // Optional: Custom logic after sign in
+//         return Task.CompletedTask;
+//     };
+// });
 
 var app = builder.Build();
 
