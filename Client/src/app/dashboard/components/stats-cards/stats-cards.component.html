@@ -1,0 +1,57 @@
+<div class="stats-grid">
+  <mat-card>
+    <mat-icon class="stats-card-icon" color="primary">person</mat-icon>
+    <mat-card-content>
+      <p class="stats-card-title">Total Members</p>
+      <h3>{{ members.length }}</h3>
+      <div class="member-avatars" #avatarsContainer>
+        <ng-container *ngFor="let member of members.slice(0, maxAvatars); let i = index">
+          <img [src]="member.avatar" [alt]="member.name" />
+        </ng-container>
+        <span *ngIf="members.length > maxAvatars" class="more-avatars"
+          >+{{ members.length - maxAvatars }}</span
+        >
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-icon class="stats-card-icon" style="color: rgb(0, 140, 255)" color="primary"
+      >collections</mat-icon
+    >
+    <mat-card-content>
+      <p class="stats-card-title">Total Posts</p>
+      <h3>{{ 8 }}</h3>
+      <div class="member-avatars">
+        <p class="stats-card-sub-title">
+          Published: {{ 2 }}
+          <mat-icon class="fiber_manual_record">fiber_manual_record</mat-icon>
+          Scheduled: {{ 2 }}
+          <mat-icon class="fiber_manual_record">fiber_manual_record</mat-icon>
+          Draft: {{ 0 }}
+        </p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-icon class="stats-card-icon" style="color: rgb(199, 202, 6)" color="primary"
+      >query_builder</mat-icon
+    >
+    <mat-card-content>
+      <p class="stats-card-title">Total Views</p>
+      <h3>{{ 1650 }}</h3>
+      <div class="member-avatars">
+        <p class="stats-card-sub-title">30-day view aggregation</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <mat-card>
+    <mat-icon class="stats-card-icon" color="primary">done_all</mat-icon>
+    <mat-card-content>
+      <p class="stats-card-title">Published This Month</p>
+      <h3>{{ 2 }}</h3>
+      <div class="member-avatars">
+        <p class="stats-card-sub-title">Status breakdown across platforms</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

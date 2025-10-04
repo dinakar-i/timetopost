@@ -1,0 +1,32 @@
+.analytics-container {
+  padding: 20px;
+  background: #f5f6f8;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.stats-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.graphs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+.time-slot {
+  background: #c6f6d5;
+  text-align: center;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+}

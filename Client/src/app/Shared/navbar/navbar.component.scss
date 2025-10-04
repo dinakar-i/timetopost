@@ -1,0 +1,53 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); // Added shadow effect
+  align-items: center;
+}
+.organization-dropdown {
+  width: 200px;
+  margin-left: 40px;
+  margin-top: 10px;
+  margin-right: 1rem;
+  border-radius: 10px;
+  border: 1px solid #5a59593d;
+  padding: 0.25rem 0.5rem;
+  position: absolute;
+  background-color: white;
+  cursor: pointer;
+}
+.organization-dropdown:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.dropdown-item {
+  padding-top: 10px;
+  display: flex;
+  align-items: center;
+}
+.org-logo {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.selectedOrg-logo {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+}
+.dropdown {
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-spacer {
+  flex: 1 1 auto;
+}

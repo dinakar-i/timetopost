@@ -1,0 +1,69 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.member-avatars {
+  display: flex;
+  justify-content: flex-start; // Aligns avatars to the left
+  margin-top: 8px;
+  gap: 0; // Remove gap for overlap
+  align-items: center;
+}
+
+.member-avatars img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-left: -16px; // 50% overlap
+  &:first-child {
+    margin-left: 0;
+  }
+}
+.stats-card-title {
+  color: #555;
+}
+.more-avatars {
+  margin-left: -16px; // Overlap just like the avatars
+  font-size: 0.95rem;
+  background: #eee;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
+  font-weight: 500;
+  box-sizing: border-box; // Ensures border doesn't distort the circle
+}
+
+.stats-card-icon {
+  position: absolute;
+  right: 10%; // Change from left to right
+  top: 20%;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  font-size: 50px;
+  color: rgb(5, 163, 5);
+}
+.stats-card-sub-title {
+  font-size: 13px;
+  vertical-align: middle;
+  margin: 0 4px;
+  color: #888;
+}
+.fiber_manual_record {
+  font-size: 10px;
+  display: inline;
+  margin: 0 4px;
+  color: #888;
+}
+mat-card {
+  position: relative;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
+}

@@ -1,0 +1,42 @@
+<mat-card>
+  <div class="calendar-header">
+    <h3 class="post-calendar-title">Post Calendar - {{ currentMonthName }} {{ currentYear }}</h3>
+    <div class="month-nav">
+      <button mat-icon-button color="primary" (click)="prevMonth()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="nextMonth()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-card-content>
+    <div class="calendar-grid">
+      <div class="day" *ngFor="let day of days">
+        <div class="date">
+          {{ day }}
+
+          <!-- Only show + button if day is >= today in current month -->
+          <button
+            mat-icon-button
+            color="primary"
+            class="add-btn"
+            *ngIf="isFutureOrToday(day)"
+            (click)="addPost(day)"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
+        <!-- ✅ Loop through all posts for this day -->
+        @for (post of getPostsForDay(day); track $index) {
+        <div class="post" [ngClass]="post.status">
+          <small>{{ post.post }}</small>
+          <span>- {{ post.author }}</span>
+        </div>
+        }
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

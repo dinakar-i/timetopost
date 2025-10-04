@@ -1,0 +1,33 @@
+.platform-breakdown-title {
+  margin-left: 20px;
+  color: #333;
+}
+.platform-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  width: 100%;
+}
+.platform-card {
+  padding: 12px 16px !important; // Reduce padding
+  margin: 0; // Remove extra margin
+  min-height: unset !important; // Remove min-height if set by Angular Material
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+}
+.platform-breakdown-card {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
+}
+.platform-card .mat-card-title,
+.platform-card h5.mat-card-title {
+  font-size: 0.8rem; // Set your desired font size
+  margin: 2px 0 !important;
+}
+.platform-card .mat-card-subtitle,
+.platform-card p {
+  margin: 0px 0 !important; // Reduce vertical spacing between elements
+  font-size: 0.75rem;
+}

@@ -1,0 +1,58 @@
+<br /><br /><br /><br />
+<div class="analytics-container">
+  <!-- Filters -->
+  <app-filters></app-filters>
+
+  <!-- Stats Cards -->
+  <div class="stats-cards">
+    <app-stat-card
+      *ngFor="let s of stats"
+      [label]="s.label"
+      [value]="s.value"
+      [change]="s.change"
+      [positive]="s.positive"
+    >
+    </app-stat-card>
+  </div>
+
+  <!-- Graphs -->
+  <div class="graphs">
+    <div class="analytics-container">
+      <app-graph-card
+        [title]="'Follower Growth'"
+        [type]="followerGrowth.type"
+        [columns]="followerGrowth.columns"
+        [data]="followerGrowth.data"
+        [options]="followerGrowth.options"
+      >
+      </app-graph-card>
+      <br />
+      <app-graph-card
+        [title]="'Engagement by Post Type'"
+        [type]="postType.type"
+        [columns]="postType.columns"
+        [data]="postType.data"
+        [options]="postType.options"
+      >
+      </app-graph-card>
+    </div>
+
+    <!-- Special case: Best Times grid (not a chart) -->
+    <div style="margin-top: 20px" class="graph-card">
+      <app-graph-card
+        [title]="'Engagement Split'"
+        [type]="engagementSplit.type"
+        [columns]="engagementSplit.columns"
+        [data]="engagementSplit.data"
+        [options]="engagementSplit.options"
+      >
+      </app-graph-card>
+      <h3>Best Times to Post</h3>
+      <div class="time-grid">
+        <div *ngFor="let time of ['8a', '10a', '12p', '2p', '4p', '6p', '8p']" class="time-slot">
+          {{ time }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

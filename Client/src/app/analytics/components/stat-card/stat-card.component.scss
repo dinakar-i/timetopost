@@ -1,0 +1,25 @@
+.stat-card {
+  background: #fff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+.label {
+  color: #666;
+  font-size: 14px;
+}
+.value {
+  font-size: 22px;
+  margin: 5px 0;
+  font-weight: bold;
+}
+.change {
+  font-size: 13px;
+  font-weight: bold;
+}
+.positive {
+  color: green;
+}
+.negative {
+  color: red;
+}

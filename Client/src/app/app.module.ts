@@ -10,7 +10,7 @@ import { NgModule } from '@angular/core';
     HttpClientModule, // ✅ Must be imported
     RouterModule.forRoot(routes),
   ],
-  declarations: [],
+
   bootstrap: [],
 })
 export class AppModule {}

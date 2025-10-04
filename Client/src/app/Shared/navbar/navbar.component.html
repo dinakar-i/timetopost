@@ -1,0 +1,25 @@
+<div class="navbar">
+  <div class="organization-dropdown">
+    <!-- Trigger -->
+    <div class="dropdown" (click)="toggleDropdown()">
+      <img [src]="selectedOrg.logo" [alt]="selectedOrg.name" class="selectedOrg-logo" />
+      <span>{{ selectedOrg.name }}</span>
+      <span class="dropdown-spacer"></span>
+      @if(!isOpen) {
+      <span class="arrow">▼</span>
+      } @if(isOpen) {
+      <span class="arrow">▲</span>
+      }
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu" *ngIf="isOpen">
+      @for (item of organizations; track $index) {
+      <div class="dropdown-item" (click)="selectOrg(item)">
+        <img [src]="item.logo" [alt]="item.name" class="org-logo" />
+        <span>{{ item.name }}</span>
+      </div>
+      }
+    </div>
+  </div>
+</div>
