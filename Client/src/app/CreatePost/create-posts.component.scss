@@ -1,0 +1,61 @@
+.create-page {
+  padding: 16px;
+  background: #f5f6f8;
+  min-height: 100vh;
+  box-sizing: border-box;
+
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+    .spacer {
+      flex: 1;
+    }
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 2.5fr 0.5fr;
+    gap: 18px;
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      .cards {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        max-height: calc(100vh - 220px);
+        overflow: auto;
+      }
+      .footer-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+      app-post-card.active {
+        outline: 3px solid #4caf50;
+      }
+    }
+
+    .right {
+      position: sticky;
+      top: 16px;
+      align-self: start;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .placeholder {
+        color: #888;
+        padding: 20px;
+        text-align: center;
+      }
+    }
+  }
+}

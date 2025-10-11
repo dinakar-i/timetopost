@@ -1,0 +1,58 @@
+<div class="create-page">
+  <div class="header">
+    <h2>Create Scheduled Posts</h2>
+    <div class="footer-actions">
+      <button mat-stroked-button>Save Draft</button>
+      <button mat-raised-button color="accent" (click)="scheduleAll()">Schedule All</button>
+    </div>
+    <div class="spacer"></div>
+    <button mat-raised-button color="primary" (click)="addPost()">
+      <mat-icon>add</mat-icon> Add Post
+    </button>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: cards list -->
+    <div class="left">
+      <div class="cards">
+        <app-post-card
+          *ngFor="let post of posts"
+          [post]="post"
+          [platforms]="platforms"
+          (changed)="updatePost($event)"
+          (delete)="removePost($event)"
+          (focus)="setActive($event)"
+          [class.active]="post.id === activeId"
+          [disableDelete]="posts.length === 1"
+        >
+        </app-post-card>
+      </div>
+    </div>
+
+    <!-- RIGHT: optional live preview -->
+    <div class="right">
+      <!-- Uncomment if you want live preview now -->
+
+      <app-phone-preview
+        *ngIf="activePost"
+        [job]="{
+          id: activePost.id,
+          title: activePost.title,
+          platform: activePost.platform,
+          type: activePost.type,
+          creator: activePost.creator,
+          caption: activePost.caption,
+          time:
+            (activePost.date ? (activePost.date | date : 'yyyy-MM-dd') : '') +
+            ' ' +
+            activePost.time,
+          status: activePost.status,
+          image: activePost.images || ''
+        }"
+      >
+      </app-phone-preview>
+
+      <!-- <div class="placeholder">Select / edit a post on the left to preview.</div> -->
+    </div>
+  </div>
+</div>

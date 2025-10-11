@@ -1,0 +1,79 @@
+<div class="post-card" (click)="focus.emit(post.id)">
+  <div class="post-card__row">
+    <mat-form-field appearance="outline" class="w-50">
+      <mat-label>Platform</mat-label>
+      <mat-select [(ngModel)]="post.platform" (selectionChange)="onPlatformChange()">
+        <mat-option *ngFor="let p of platforms" [value]="p">{{ p }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-50">
+      <mat-label>Post Type</mat-label>
+      <mat-select [(ngModel)]="post.type" (selectionChange)="emit()">
+        <mat-option *ngFor="let t of postTypes[post.platform]" [value]="t">{{ t }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="post-card__upload">
+    <label class="upload-area" [class.upload-area--carousel]="post.type === 'Carousel'">
+      <input
+        type="file"
+        (change)="onFileSelect($event)"
+        [attr.multiple]="post.type === 'Carousel' ? '' : null"
+        accept="image/*,video/*"
+        hidden
+      />
+      <mat-icon>cloud_upload</mat-icon>
+      <div class="upload-text">
+        <strong>{{
+          post.type === 'Carousel' ? 'Upload images (up to 10)' : 'Upload image/video'
+        }}</strong>
+        <small>Drag & drop or click to select files</small>
+      </div>
+    </label>
+
+    <!-- Thumbnails -->
+    <div class="thumbs" cdkDropList *ngIf="post.images.length" (cdkDropListDropped)="drop($event)">
+      <div class="thumb" *ngFor="let img of post.images; let i = index" cdkDrag>
+        <img [src]="img" alt="media" />
+        <button mat-mini-fab color="warn" class="thumb__remove" (click)="removeImage(i)">
+          <mat-icon>close</mat-icon>
+        </button>
+        <div class="thumb__order" *ngIf="post.type === 'Carousel'">{{ i + 1 }}</div>
+        <div class="thumb__handle" cdkDragHandle><mat-icon>drag_indicator</mat-icon></div>
+      </div>
+    </div>
+  </div>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label>Caption</mat-label>
+    <textarea matInput rows="3" [(ngModel)]="post.caption" (input)="emit()"></textarea>
+  </mat-form-field>
+
+  <div class="post-card__row">
+    <mat-form-field appearance="outline" class="w-50">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="post.date" (dateChange)="emit()" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="w-50">
+      <mat-label>Time</mat-label>
+      <input matInput type="time" [(ngModel)]="post.time" (input)="emit()" />
+    </mat-form-field>
+  </div>
+
+  <div class="post-card__actions">
+    <button mat-stroked-button color="primary" (click)="emit()">Update</button>
+    <button
+      mat-stroked-button
+      color="warn"
+      (click)="delete.emit(post.id)"
+      [disabled]="disableDelete"
+    >
+      Delete
+    </button>
+  </div>
+</div>

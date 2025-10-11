@@ -24,9 +24,18 @@ export class AnalyticsComponent {
   stats = [
     { label: 'Followers', value: '48,920', change: '+2.4%', positive: true },
     { label: 'Engagement Rate', value: '4.8%', change: '+0.6%', positive: true },
-    { label: 'Reach (30d)', value: '1.2M', change: '+12%', positive: true },
+    { label: 'Reach', value: '1.2M', change: '+12%', positive: true },
     { label: 'CTR', value: '2.1%', change: '-0.2%', positive: false },
   ];
+  bestTimesData: { [day: string]: { [time: string]: number } } = {
+    Sun: { '8a': 20, '10a': 40, '12p': 80, '2p': 60, '4p': 30, '6p': 50, '8p': 10 },
+    Mon: { '8a': 10, '10a': 20, '12p': 50, '2p': 70, '4p': 40, '6p': 60, '8p': 30 },
+    Tue: { '8a': 30, '10a': 50, '12p': 60, '2p': 90, '4p': 20, '6p': 40, '8p': 10 },
+    Wed: { '8a': 15, '10a': 25, '12p': 70, '2p': 85, '4p': 55, '6p': 40, '8p': 25 },
+    Thu: { '8a': 25, '10a': 35, '12p': 65, '2p': 75, '4p': 45, '6p': 55, '8p': 15 },
+    Fri: { '8a': 5, '10a': 15, '12p': 35, '2p': 55, '4p': 65, '6p': 75, '8p': 20 },
+  };
+
   followerGrowth = {
     type: ChartType.LineChart,
     columns: ['Date', 'Followers'],
@@ -67,4 +76,10 @@ export class AnalyticsComponent {
     ],
     options: { colors: ['#66BB6A', '#42A5F5', '#AB47BC'] },
   };
+
+  getColor(value: number): string {
+    if (value === 0) return '#f5f5f5'; // light grey for no engagement
+    const green = Math.floor((value / 100) * 200); // scale 0–100 to 0–200
+    return `rgb(0, ${green}, 0)`; // darker green as % increases
+  }
 }

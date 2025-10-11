@@ -1,0 +1,59 @@
+.job-row {
+  display: grid;
+  grid-template-columns: 10% 20% 15% 10% 15% 10% 10%;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background: #f9fafc;
+    transition: 0.2s ease;
+  }
+
+  .platform-icon {
+    vertical-align: middle;
+    margin-right: 6px;
+    color: #1976d2;
+  }
+
+  .status.scheduled {
+    color: #fbc02d;
+  }
+
+  .status.published {
+    color: #388e3c;
+  }
+
+  .status.draft {
+    color: #757575;
+  }
+
+  .job-actions {
+    display: flex;
+    gap: 6px;
+
+    button {
+      font-size: 13px;
+      text-transform: none;
+      border-radius: 5px;
+      padding: 4px 12px;
+    }
+
+    .edit {
+      background: #ffb300;
+      color: #fff;
+    }
+
+    .delete {
+      background: #e53935;
+      color: #fff;
+    }
+
+    .draft {
+      background: #757575;
+      color: #fff;
+    }
+  }
+}

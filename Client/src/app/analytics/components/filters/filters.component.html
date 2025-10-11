@@ -1,25 +1,62 @@
 <div class="filters">
+  <!-- Date Range -->
   <div class="date-range-row">
     <p class="fillter-sub-title">Date Range</p>
-    <div class="date-range">
-      <mat-icon class="calendar-icon">calendar_today</mat-icon>
-      <select class="date-range-select" aria-label="Select Date Range">
-        <option value="last7">Last 7 Days</option>
-        <option value="last30">Last 30 Days</option>
-        <option value="last60">Last 60 Days</option>
-        <option value="lastYear">Last 365 Days</option>
-      </select>
+    <div class="fillter-dropdown">
+      <div class="dropdown" (click)="toggleDropdown()">
+        <span>{{ selectedDate }}</span>
+        <span class="dropdown-spacer"></span>
+        @if(!isOpen) {
+        <span class="arrow">▼</span>
+        } @if(isOpen) {
+        <span class="arrow">▲</span>
+        }
+      </div>
+
+      <!-- Dropdown Menu -->
+      <div class="dropdown-menu" *ngIf="isOpen">
+        @for (item of Dates; track $index) {
+        <div class="dropdown-item" (click)="selectDate(item)">
+          <span>{{ item }}</span>
+        </div>
+        }
+      </div>
     </div>
   </div>
 
-  <div class="platforms">
-    <button mat-stroked-button color="primary">Instagram</button>
-    <button mat-stroked-button>Facebook</button>
-    <button mat-stroked-button>LinkedIn</button>
+  <!-- Platforms -->
+  <div class="platforms-row">
+    <p class="fillter-sub-title">Platforms</p>
+    <div class="platforms">
+      <button class="platform-button" mat-stroked-button color="primary">
+        <i class="fa-brands fa-instagram"></i> Instagram
+      </button>
+      <button class="platform-button" mat-stroked-button>
+        <i class="fa-brands fa-facebook-f"></i> Facebook
+      </button>
+      <button class="platform-button" mat-stroked-button>
+        <i class="fa-brands fa-linkedin-in"></i>LinkedIn
+      </button>
+      <button class="platform-button" mat-stroked-button>
+        <i class="fa-solid fa-xmark"></i>Twitter
+      </button>
+    </div>
   </div>
 
+  <!-- Actions -->
   <div class="actions">
-    <button mat-stroked-button>Advanced</button>
-    <button mat-raised-button color="accent">Export</button>
+    <button class="platform-button" mat-stroked-button>
+      <mat-icon>filter_list</mat-icon>
+      Advanced
+    </button>
+    <button
+      style="background-color: #0f1828; color: white"
+      class="platform-button"
+      mat-raised-button
+      color="accent"
+    >
+      <mat-icon style="color: white">download</mat-icon>
+      Export
+    </button>
   </div>
 </div>

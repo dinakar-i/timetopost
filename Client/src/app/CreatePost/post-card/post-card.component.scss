@@ -1,0 +1,89 @@
+.post-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  &__row {
+    display: flex;
+    gap: 12px;
+  }
+  &__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+
+  .w-50 {
+    width: 50%;
+  }
+  .w-100 {
+    width: 100%;
+  }
+
+  .upload-area {
+    border: 2px dashed #cfcfcf;
+    border-radius: 10px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    background: #fafafa;
+    mat-icon {
+      color: #888;
+    }
+    &:hover {
+      border-color: #4caf50;
+    }
+  }
+
+  .thumbs {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .thumb {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #eee;
+    height: 96px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    &__remove {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+    }
+    &__order {
+      position: absolute;
+      bottom: 6px;
+      left: 8px;
+      background: #000a;
+      color: #fff;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 12px;
+    }
+    &__handle {
+      position: absolute;
+      bottom: 6px;
+      right: 6px;
+      color: #fff;
+      background: #0008;
+      border-radius: 50%;
+      padding: 2px;
+      display: flex;
+    }
+  }
+}

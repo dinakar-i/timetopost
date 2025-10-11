@@ -1,0 +1,86 @@
+<div class="phone-frame">
+  <div class="notch"></div>
+
+  <ng-container *ngIf="job; else noPost">
+    <!-- INSTAGRAM -->
+    <ng-container *ngIf="isInstagram">
+      <div class="instagram-preview">
+        <div class="ig-header">
+          <img
+            src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+            class="ig-avatar"
+            alt="Profile"
+          />
+          <span class="ig-username">{{ job.creator }}</span>
+        </div>
+
+        <!-- Post Types -->
+        <div *ngIf="job.type === 'Post'" class="ig-post">
+          <img [src]="job.image" class="ig-image" alt="Instagram Post" />
+        </div>
+
+        <div *ngIf="job.type === 'Reel'" class="ig-reel">
+          <img [src]="job.image" class="ig-video" alt="Instagram Reel" />
+          <div class="play-icon">▶</div>
+        </div>
+
+        <div *ngIf="job.type === 'Story'" class="ig-story">
+          <img [src]="job.image" class="ig-story-image" alt="Instagram Story" />
+          <div class="ig-story-overlay">
+            <p class="ig-story-text">{{ job.caption }}</p>
+          </div>
+        </div>
+
+        <div class="ig-footer">
+          <div *ngIf="job.type === 'Post'" class="ig-icons">
+            <i class="fa-regular fa-heart"></i> <i class="fa-regular fa-comment"></i>
+            <i class="fa-solid fa-paper-plane"></i>• 78 shares<br />
+            2,456 likes
+          </div>
+          <p class="ig-caption" [innerHTML]="formattedCaption" (click)="toggleCaption($event)">
+            <!-- <strong>{{ job.creator }}</strong> {{ job.caption }} -->
+          </p>
+          <small>{{ job.time }}</small>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- FACEBOOK -->
+    <ng-container *ngIf="isFacebook">
+      <div class="facebook-preview">
+        <div class="fb-header">
+          <img src="assets/icons/fb-profile.jpg" class="fb-avatar" />
+          <div class="fb-userinfo">
+            <span class="fb-username">{{ job.creator }}</span>
+            <small>{{ job.time }}</small>
+          </div>
+        </div>
+        <p class="fb-caption">{{ job.caption }}</p>
+        <img [src]="job.image" class="fb-image" alt="Facebook Post" />
+        <div class="fb-footer">👍 ❤️ 😮 • 💬 15 Comments • 🔁 3 Shares</div>
+      </div>
+    </ng-container>
+
+    <!-- TWITTER -->
+    <ng-container *ngIf="isTwitter">
+      <div class="twitter-preview">
+        <div class="tw-header">
+          <img src="assets/icons/tw-profile.jpg" class="tw-avatar" />
+          <div class="tw-userinfo">
+            <span class="tw-name">{{ job.creator }}</span>
+            <small>@{{ job.creator.split(' ')[0].toLowerCase() }}</small>
+          </div>
+        </div>
+        <p class="tw-caption">{{ job.caption }}</p>
+        <img [src]="job.image" class="tw-image" alt="Twitter Post" />
+        <div class="tw-footer">💬 23 &nbsp; 🔁 11 &nbsp; ❤️ 132</div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #noPost>
+    <div class="empty-preview">
+      <p>Select a job to preview its post</p>
+    </div>
+  </ng-template>
+</div>

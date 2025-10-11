@@ -1,0 +1,51 @@
+<!-- <br /><br /><br /><br /> -->
+<!-- <div class="filters-bar">
+  <mat-form-field appearance="outline">
+    <mat-label>Platform</mat-label>
+    <mat-select [(ngModel)]="selectedPlatform">
+      <mat-option *ngFor="let p of platforms" [value]="p">{{ p }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="selectedStatus">
+      <mat-option *ngFor="let s of statuses" [value]="s">{{ s }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div> -->
+
+<div class="scheduled-page">
+  <!-- LEFT: Job list -->
+  <div class="jobs-section">
+    <h2>Scheduled Jobs</h2>
+
+    <!-- Filters -->
+
+    <!-- Header Row -->
+    <div class="jobs-header">
+      <div>Job ID</div>
+      <div>Title</div>
+      <div>Platform</div>
+      <div>Creator</div>
+      <div>Scheduled Time</div>
+      <div>Status</div>
+      <div>Actions</div>
+    </div>
+
+    <!-- Job Rows -->
+    <div class="jobs-list">
+      <app-job
+        *ngFor="let job of filteredJobs"
+        [job]="job"
+        (click)="selectJob(job)"
+        [class.active]="selectedJob?.id === job.id"
+      ></app-job>
+    </div>
+  </div>
+
+  <!-- RIGHT: Mobile preview -->
+  <div class="preview-section">
+    <app-phone-preview [job]="selectedJob"></app-phone-preview>
+  </div>
+</div>

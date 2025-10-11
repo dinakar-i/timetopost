@@ -1,0 +1,83 @@
+.scheduled-page {
+  display: flex;
+  gap: 0px;
+  padding-top: 20px;
+  background: #f5f6f8;
+  height: 100vh; /* ✅ make full page height */
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+  align-items: flex-start; /* ✅ align both top edges */
+}
+
+/* ✅ LEFT SIDE: JOB LIST */
+.jobs-section {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* ✅ take full vertical space */
+  overflow: hidden;
+  background: transparent;
+}
+
+.jobs-list {
+  flex: 1;
+  background: #fff;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #bbb transparent;
+  max-height: 100%; /* ✅ fills remaining height */
+}
+
+.jobs-header {
+  display: grid;
+  grid-template-columns: 10% 20% 15% 10% 15% 10% 10%;
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+  background: #fafafa;
+  padding: 12px 16px;
+  border-radius: 8px 8px 0 0;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* ✅ RIGHT SIDE: PHONE PREVIEW */
+.preview-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%; /* ✅ equal height to jobs table */
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* ✅ Ensure phone preview scales properly */
+app-phone-preview {
+  width: 100%;
+  max-width: 320px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ✅ Responsive behavior */
+@media (max-width: 1200px) {
+  .scheduled-page {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .preview-section {
+    margin-top: 20px;
+    height: auto;
+  }
+}

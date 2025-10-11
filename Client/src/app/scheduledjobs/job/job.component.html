@@ -1,0 +1,18 @@
+<div class="job-row">
+  <div class="job-id">{{ job.id }}</div>
+  <div class="job-title">{{ job.title }}</div>
+  <div class="job-platform">
+    <mat-icon class="platform-icon">play_circle_filled</mat-icon>
+    {{ job.platform }}
+  </div>
+  <div class="job-creator">{{ job.creator }}</div>
+  <div class="job-time">{{ job.time }}</div>
+  <div class="job-status">
+    <span class="status" [ngClass]="job.status.toLowerCase()">{{ job.status }}</span>
+  </div>
+  <div class="job-actions">
+    <button mat-raised-button color="accent" class="edit">Edit</button>
+    <button mat-raised-button color="warn" class="delete">Delete</button>
+    <button mat-raised-button class="draft">Draft</button>
+  </div>
+</div>

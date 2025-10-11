@@ -5,7 +5,7 @@ import { SidebarComponent } from './Shared/sidebar/sidebar.component';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, NavbarComponent, SidebarComponent],
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {}
