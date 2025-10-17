@@ -34,46 +34,56 @@
     </label>
 
     <!-- Thumbnails -->
-    <div class="thumbs" cdkDropList *ngIf="post.images.length" (cdkDropListDropped)="drop($event)">
-      <div class="thumb" *ngFor="let img of post.images; let i = index" cdkDrag>
+    <div
+      class="thumbs"
+      cdkDropList
+      [cdkDropListData]="post.images"
+      (cdkDropListDropped)="drop($event)"
+    >
+      <div class="thumb" *ngFor="let img of post.images; let i = index" cdkDrag [cdkDragData]="img">
         <img [src]="img" alt="media" />
+
         <button mat-mini-fab color="warn" class="thumb__remove" (click)="removeImage(i)">
           <mat-icon>close</mat-icon>
         </button>
+
         <div class="thumb__order" *ngIf="post.type === 'Carousel'">{{ i + 1 }}</div>
-        <div class="thumb__handle" cdkDragHandle><mat-icon>drag_indicator</mat-icon></div>
+
+        <div class="thumb__handle" cdkDragHandle>
+          <mat-icon>drag_indicator</mat-icon>
+        </div>
       </div>
     </div>
-  </div>
 
-  <mat-form-field appearance="outline" class="w-100">
-    <mat-label>Caption</mat-label>
-    <textarea matInput rows="3" [(ngModel)]="post.caption" (input)="emit()"></textarea>
-  </mat-form-field>
-
-  <div class="post-card__row">
-    <mat-form-field appearance="outline" class="w-50">
-      <mat-label>Date</mat-label>
-      <input matInput [matDatepicker]="picker" [(ngModel)]="post.date" (dateChange)="emit()" />
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+    <mat-form-field appearance="outline" class="w-100">
+      <mat-label>Caption</mat-label>
+      <textarea matInput rows="3" [(ngModel)]="post.caption" (input)="emit()"></textarea>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="w-50">
-      <mat-label>Time</mat-label>
-      <input matInput type="time" [(ngModel)]="post.time" (input)="emit()" />
-    </mat-form-field>
-  </div>
+    <div class="post-card__row">
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="post.date" (dateChange)="emit()" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
 
-  <div class="post-card__actions">
-    <button mat-stroked-button color="primary" (click)="emit()">Update</button>
-    <button
-      mat-stroked-button
-      color="warn"
-      (click)="delete.emit(post.id)"
-      [disabled]="disableDelete"
-    >
-      Delete
-    </button>
+      <mat-form-field appearance="outline" class="w-50">
+        <mat-label>Time</mat-label>
+        <input matInput type="time" [(ngModel)]="post.time" (input)="emit()" />
+      </mat-form-field>
+    </div>
+
+    <div class="post-card__actions">
+      <button mat-stroked-button color="primary" (click)="emit()">Update</button>
+      <button
+        mat-stroked-button
+        color="warn"
+        (click)="delete.emit(post.id)"
+        [disabled]="disableDelete"
+      >
+        Delete
+      </button>
+    </div>
   </div>
 </div>

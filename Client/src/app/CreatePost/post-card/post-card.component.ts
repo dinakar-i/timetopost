@@ -67,8 +67,14 @@ export class PostCardComponent {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    if (event.previousIndex === event.currentIndex) return;
+
+    // Move the actual data inside the array
     moveItemInArray(this.post.images, event.previousIndex, event.currentIndex);
-    this.emit();
+
+    console.log('Images reordered:', this.post.images);
+
+    this.emit(); // Send updated post to parent
   }
 
   emit() {
