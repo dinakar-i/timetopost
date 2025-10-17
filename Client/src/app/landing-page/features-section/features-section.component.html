@@ -1,0 +1,10 @@
+<section class="features">
+  <h2>Powerful Features, Simple Workflow</h2>
+  <div class="feature-grid">
+    <div class="feature-card" *ngFor="let f of features">
+      <mat-icon>{{ f.icon }}</mat-icon>
+      <h3>{{ f.title }}</h3>
+      <p>{{ f.desc }}</p>
+    </div>
+  </div>
+</section>
