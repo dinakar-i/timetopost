@@ -1,8 +1,104 @@
 .landing-page {
   display: flex;
   flex-direction: column;
-  gap: 100px;
-  background: #f9fafc;
-  font-family: 'Inter', sans-serif;
-  color: #222;
+  min-height: 100vh;
+  /* keep existing visual styles */
+  position: relative;
+  box-sizing: border-box;
+  color: #071233;
+  background: linear-gradient(135deg, #f6f9ff 0%, #eef6fb 45%, #ffffff 100%);
+  overflow: hidden;
+}
+
+/* soft blurred radial glows for depth */
+.landing-page::before,
+.landing-page::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(72px);
+  opacity: 0.55;
+}
+
+/* left-top blue glow */
+.landing-page::before {
+  width: 720px;
+  height: 420px;
+  left: -8%;
+  top: -6%;
+  background: radial-gradient(
+    circle at 20% 20%,
+    rgba(111, 125, 255, 0.12),
+    rgba(111, 125, 255, 0.04) 30%,
+    transparent 60%
+  );
+  transform: rotate(-6deg);
+}
+
+/* right-bottom warm glow */
+.landing-page::after {
+  width: 620px;
+  height: 380px;
+  right: -6%;
+  bottom: -6%;
+  background: radial-gradient(
+    circle at 80% 80%,
+    rgba(157, 157, 255, 0.08),
+    rgba(255, 157, 157, 0.02) 30%,
+    transparent 60%
+  );
+  transform: rotate(6deg);
+}
+
+/* subtle paper-like texture using repeating-radial */
+.landing-page > .texture {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 12px 12px;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+  filter: blur(0.5px);
+}
+
+/* ensure content sits above effects */
+.landing-page > * {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
+/* responsive tweak: reduce glow size on small screens */
+@media (max-width: 880px) {
+  .landing-page::before {
+    width: 420px;
+    height: 260px;
+    left: -18%;
+    top: -14%;
+    opacity: 0.45;
+    filter: blur(56px);
+  }
+  .landing-page::after {
+    width: 420px;
+    height: 260px;
+    right: -18%;
+    bottom: -14%;
+    opacity: 0.38;
+    filter: blur(56px);
+  }
+}
+
+/* ensure content areas grow and footer stays at bottom */
+.landing-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* let footer push itself to the bottom when content is short */
+.landing-page > .site-footer {
+  margin-top: auto;
+  flex-shrink: 0;
 }
