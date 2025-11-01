@@ -1,1 +1,58 @@
-<p>footer-section works!</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="brand">
+        <div class="logo">TimeToPost</div>
+        <p class="tagline">
+          Plan · Schedule · Analyze — all your social accounts in one dashboard.
+        </p>
+      </div>
+
+      <div class="links-grid">
+        <div class="links-col">
+          <h4>Product</h4>
+          <a href="#">Features</a>
+          <a href="#">Live Preview</a>
+          <a href="#">Pricing</a>
+        </div>
+
+        <div class="links-col">
+          <h4>Resources</h4>
+          <a href="#">Blog</a>
+          <a href="#">Guides</a>
+          <a href="#">API</a>
+        </div>
+
+        <div class="links-col">
+          <h4>Company</h4>
+          <a href="#">About</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+
+        <div class="newsletter">
+          <h4>Get updates</h4>
+          <p class="small">Subscribe to product news and tips.</p>
+          <form (submit)="$event.preventDefault()" class="subscribe-form" aria-label="Subscribe">
+            <input type="email" placeholder="Your email" aria-label="Email" />
+            <button type="submit">Subscribe</button>
+          </form>
+
+          <div class="social">
+            <a aria-label="Twitter" href="#" class="icon">T</a>
+            <a aria-label="Facebook" href="#" class="icon">f</a>
+            <a aria-label="Instagram" href="#" class="icon">◐</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>{{ currentYear }} TimeToPost. All rights reserved.</span>
+      <div class="legal">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </div>
+</footer>

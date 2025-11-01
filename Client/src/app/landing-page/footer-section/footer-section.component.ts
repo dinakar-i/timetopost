@@ -4,8 +4,9 @@ import { Component } from '@angular/core';
   selector: 'app-footer-section',
   imports: [],
   templateUrl: './footer-section.component.html',
-  styleUrl: './footer-section.component.scss'
+  styleUrl: './footer-section.component.scss',
 })
 export class FooterSectionComponent {
-
+  // expose the current year for the template
+  currentYear: number = new Date().getFullYear();
 }
