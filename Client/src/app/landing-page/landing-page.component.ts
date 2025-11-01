@@ -5,15 +5,17 @@ import { LivePreviewComponent } from './live-preview/live-preview.component';
 import { PricingSectionComponent } from './pricing-section/pricing-section.component';
 import { HeroSectionComponent } from './hero-section/hero-section.component';
 import { FooterSectionComponent } from './footer-section/footer-section.component';
+import { NavSectionComponent } from './nav-section/nav-section.component';
 @Component({
   selector: 'app-landing-page',
   imports: [
-    TestimonialsSectionComponent,
+    // TestimonialsSectionComponent,
     FeaturesSectionComponent,
     LivePreviewComponent,
     PricingSectionComponent,
     HeroSectionComponent,
     FooterSectionComponent,
+    NavSectionComponent,
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss',

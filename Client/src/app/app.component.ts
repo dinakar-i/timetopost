@@ -15,7 +15,7 @@ export class AppComponent {
 
   constructor(private router: Router) {
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
-      this.isLandingPage = this.router.url === '/';
+      this.isLandingPage = this.router.url === '/' || this.router.url === '/legal';
     });
   }
 }
