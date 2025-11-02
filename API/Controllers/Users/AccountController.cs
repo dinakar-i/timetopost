@@ -13,10 +13,12 @@ namespace API.Controllers.Users
     {
         private TokenService tokenService;
         private StoreContext _context;
-        public AccountController(StoreContext storeContext)
+        private readonly IConfiguration _configuration;
+        public AccountController(StoreContext storeContext, IConfiguration configuration)
         {
-            tokenService = new TokenService();
+            if (tokenService == null) tokenService = new TokenService();
             _context = storeContext;
+            _configuration = configuration;
         }
         // Step 1️⃣: Trigger Google Login
         [HttpGet("signin")]
@@ -60,7 +62,7 @@ namespace API.Controllers.Users
             });
 
             // Return access token to frontend
-            return Redirect($"http://localhost:4200/app?token={accessToken}");
+            return Redirect($"{_configuration["redirectUrls:frontend"]}/app?token={accessToken}");
 
             // Or redirect to home page after login:
             // return RedirectToAction("Index", "Home");
