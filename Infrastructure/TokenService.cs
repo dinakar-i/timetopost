@@ -3,7 +3,6 @@ using System.IdentityModel.Tokens.Jwt;  // For JwtRegisteredClaimNames, JwtSecur
 using System.Security.Claims;           // For Claim
 using Microsoft.IdentityModel.Tokens;   // For SymmetricSecurityKey, SigningCredentials, SecurityAlgorithms
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using System.Security.Cryptography;                       // For Encoding.UTF8
 namespace Infrastructure;
 

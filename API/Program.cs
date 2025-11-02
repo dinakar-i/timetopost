@@ -2,7 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.HttpOverrides;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,16 +15,15 @@ builder.Services.AddDbContext<StoreContext>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Session timeout
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add CORS policy
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -34,14 +34,23 @@ builder.Services.AddCors(options =>
     });
 });
 
+// Trust forwarded headers from reverse proxy (X-Forwarded-For, X-Forwarded-Proto)
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    // If behind a trusted proxy, add KnownProxies / KnownNetworks instead of clearing
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
 }).AddCookie(options =>
 {
-    options.Cookie.SameSite = SameSiteMode.Lax;  // ← Crucial
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;  // Ensure HTTPS
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
 }).AddGoogle(options =>
 {
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -49,27 +58,18 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = "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";
     options.CallbackPath = "/signin-google";
 });
-// builder.Services.ConfigureApplicationCookie(options =>
-// {
-//     options.LoginPath = "/account/login";             // Where to go to sign in
-//     options.LogoutPath = "/account/logout";
-//     options.AccessDeniedPath = "/account/forbidden";
-//     options.Events.OnSignedIn = context =>
-//     {
-//         // Optional: Custom logic after sign in
-//         return Task.CompletedTask;
-//     };
-// });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Ensure forwarded headers are processed BEFORE redirects/authentication
+app.UseForwardedHeaders();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseHttpsRedirection();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
