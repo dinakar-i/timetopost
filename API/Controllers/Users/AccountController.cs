@@ -48,7 +48,7 @@ namespace API.Controllers.Users
             var refreshToken = tokenService.GenerateRefreshToken(); // Random string
 
             // Save refreshToken in database linked to user
-            await SaveRefreshTokenToDatabase(email, name, refreshToken);
+            //  await SaveRefreshTokenToDatabase(email, name, refreshToken);
 
             // Set refresh token in HttpOnly secure cookie
             Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
