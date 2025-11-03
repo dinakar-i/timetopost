@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { environment } from '../../model/environment';
 
 @Component({
   selector: 'app-nav-section',
@@ -9,4 +10,6 @@ import { RouterModule } from '@angular/router';
   standalone: true, // <- ensure standalone component
   imports: [CommonModule, RouterModule],
 })
-export class NavSectionComponent {}
+export class NavSectionComponent {
+  public baseUrl = environment.apiUrl;
+}

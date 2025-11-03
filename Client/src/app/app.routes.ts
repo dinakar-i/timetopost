@@ -5,6 +5,7 @@ import { ScheduledjobsComponent } from './scheduledjobs/scheduledjobs.component'
 import { CreatePostsComponent } from './CreatePost/create-posts.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TermsPrivacyComponent } from './legal/terms-privacy/terms-privacy.component';
+import { AuthPageComponent } from './auth-page/auth-page.component';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // Redirect root
@@ -13,4 +14,10 @@ export const routes: Routes = [
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'jobs', component: ScheduledjobsComponent },
   { path: 'post', component: CreatePostsComponent },
+
+  // Use loadComponent for a standalone component (lazy / standalone friendly)
+  {
+    path: 'app',
+    loadComponent: () => import('./auth-page/auth-page.component').then((m) => m.AuthPageComponent),
+  },
 ];

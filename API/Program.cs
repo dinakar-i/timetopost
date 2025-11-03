@@ -23,15 +23,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// CORS
+// CORS - safe parsing of origins (can be a comma-separated list in config)
+var frontendOrigins = builder.Configuration
+    .GetValue<string>("redirectUrls:frontend")?
+    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+    ?? new[] { "http://localhost:4200" };
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(builder.Configuration.GetSection("redirectUrls")["frontend"])
+        policy.WithOrigins(frontendOrigins) // exact origins required when AllowCredentials() is used
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials();
+              .AllowCredentials(); // required if client sends cookies / withCredentials
     });
 });
 
@@ -62,7 +67,9 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-// Ensure forwarded headers are processed BEFORE redirects/authentication
+// IMPORTANT: enable CORS before authentication/authorization and before endpoints
+app.UseCors("AllowFrontend");
+
 app.UseForwardedHeaders();
 
 if (app.Environment.IsDevelopment())
