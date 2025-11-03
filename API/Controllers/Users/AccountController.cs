@@ -58,7 +58,7 @@ namespace API.Controllers.Users
                 HttpOnly = true,
                 Secure = true,
                 SameSite = SameSiteMode.None,
-                Domain = ".postigo.in",
+               // Domain = ".postigo.in",
                 Expires = DateTime.UtcNow.AddDays(30) // Example: 30 days validity
             });
 
