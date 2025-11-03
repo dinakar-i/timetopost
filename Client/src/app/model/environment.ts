@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  apiUrl: 'https://localhost:5129',
+  // apiUrl: 'https://localhost:5129'
+  apiUrl: 'https://api.postigo.in',
 };
