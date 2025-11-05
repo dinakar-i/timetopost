@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.scss',
 })
-export class SigninComponent {}
+export class SigninComponent {
+  isPasswordVisible = false;
+
+  togglePasswordVisibility(): void {
+    this.isPasswordVisible = !this.isPasswordVisible;
+  }
+  goBack(): void {
+    window.history.back();
+  }
+}
