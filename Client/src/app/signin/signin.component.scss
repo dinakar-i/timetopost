@@ -78,19 +78,22 @@
     }
 
     .signin-btn {
-      background: #4b7bec;
+      background-image: linear-gradient(to right, #4777e6d5 20%, #8d54e9ab 51%);
       color: #fff;
       border: none;
       border-radius: 10px;
       width: 100%;
       padding: 12px;
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
+      box-shadow: 0 0 20px #eee;
 
       &:hover {
-        background: #3867d6;
+        background-position: right center; /* change the direction of the change here */
+        color: #fff;
+        text-decoration: none;
       }
     }
 

@@ -1,10 +1,17 @@
-<ng-container *ngIf="!isLandingPage; else landing">
-  <!-- your main app layout -->
-  <app-navbar></app-navbar>
-  <app-sidebar></app-sidebar>
-  <!-- <router-outlet></router-outlet> -->
+<!-- If NOT a landing/sign page -->
+<ng-container *ngIf="isRoutingReady" ;else loading>
+  <ng-container *ngIf="!isLandingPage; else simplePage">
+    <app-navbar></app-navbar>
+    <app-sidebar></app-sidebar>
+    <router-outlet></router-outlet>
+  </ng-container>
 </ng-container>
-
-<ng-template #landing>
+<!-- Landing / Sign / Legal -->
+<ng-template #simplePage>
   <router-outlet></router-outlet>
+</ng-template>
+<ng-template #loading>
+  <div class="loading-screen">
+    <p>Loading...</p>
+  </div>
 </ng-template>
