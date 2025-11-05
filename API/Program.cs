@@ -24,10 +24,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // CORS - safe parsing of origins (can be a comma-separated list in config)
-var frontendOrigins = builder.Configuration
-    .GetValue<string>("redirectUrls:frontend")?
-    .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-    ?? new[] { "http://localhost:4200" };
+// var frontendOrigins = builder.Configuration
+//     .GetValue<string>("redirectUrls:frontend")?
+//     .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+//     ?? new[] { "http://localhost:4200" };
+
+var frontendOrigins="https://postigo.in";
 
 builder.Services.AddCors(options =>
 {
