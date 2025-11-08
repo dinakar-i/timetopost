@@ -32,7 +32,7 @@ builder.Services.AddSwaggerGen();
 var frontendOrigins = builder.Configuration
     .GetValue<string>("redirectUrls:frontend")?
     .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-    ?? new[] { "http://localhost:4200" };
+    ?? new[] { "https://localhost:5129" };
 
 
 builder.Services.AddCors(options =>
@@ -87,7 +87,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
     {
         OnMessageReceived = ctx =>
         {
-            ctx.Token = ctx.Request.Cookies["postigo.invite"];
+            ctx.Token = ctx.Request.Cookies["_postigo.invite"];
             return Task.CompletedTask;
         }
     };
