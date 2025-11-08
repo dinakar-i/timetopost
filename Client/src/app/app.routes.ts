@@ -5,7 +5,7 @@ import { ScheduledjobsComponent } from './scheduledjobs/scheduledjobs.component'
 import { CreatePostsComponent } from './CreatePost/create-posts.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TermsPrivacyComponent } from './legal/terms-privacy/terms-privacy.component';
-
+import { SignupComponent } from './signup/signup.component';
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // Redirect root
   { path: 'legal', component: TermsPrivacyComponent },
@@ -22,5 +22,9 @@ export const routes: Routes = [
   {
     path: 'signin',
     loadComponent: () => import('./signin/signin.component').then((m) => m.SigninComponent),
+  },
+  {
+    path: 'signup',
+    component: SignupComponent,
   },
 ];

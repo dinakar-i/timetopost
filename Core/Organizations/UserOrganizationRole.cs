@@ -1,12 +1,10 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Users;
 
 namespace Core.Organizations;
 
-public enum OrganizationRole
-{
-    Viewer, Editor, Admin, Owner
-}
+
 [Table("userorganizationroles")]
 public class UserOrganizationRole
 {

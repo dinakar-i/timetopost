@@ -153,3 +153,11 @@ D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\Microsoft.IdentityModel.Json
 D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
 D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 D:\dotnet Learnings\timetopost\api\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\dotnet Learnings\timetopost\API\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

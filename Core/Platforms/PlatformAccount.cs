@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Core.Organizations;
 namespace Core.Platforms;
 
 // public enum PlatformType

@@ -3,6 +3,8 @@ using Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.HttpOverrides;
+using Infrastructure.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,9 @@ builder.Services.AddDbContext<StoreContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 });
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+builder.Services.AddScoped<IOrganizationRepo, OrganizationRepo>();
+builder.Services.AddScoped<TokenService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -29,7 +34,6 @@ var frontendOrigins = builder.Configuration
     .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
     ?? new[] { "http://localhost:4200" };
 
-//var frontendOrigins="https://postigo.in";
 
 builder.Services.AddCors(options =>
 {
@@ -51,22 +55,44 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownProxies.Clear();
 });
 
-builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-}).AddCookie(options =>
-{
-    options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-}).AddGoogle(options =>
-{
-    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-    options.ClientId = "804907982754-20ismbef2m7ekqjnobns2c8f99dfro36.apps.googleusercontent.com";
-    options.ClientSecret = "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";
-    options.CallbackPath = "/signin-google";
-});
+// builder.Services.AddAuthentication(options =>
+// {
+//     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
+// }).AddCookie(options =>
+// {
+//     options.Cookie.SameSite = SameSiteMode.None;
+//     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+// }).AddGoogle(options =>
+// {
+//     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//     options.ClientId = builder.Configuration["Google:ClientId"] ?? "your-client-id";
+//     options.ClientSecret = builder.Configuration["Google:ClientSecret"] ?? "your-client-secret";
+//     options.CallbackPath = "/signin-google";
+// });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration["CustomKeys:Jwt:Issuer"],
+        ValidAudience = builder.Configuration["CustomKeys:Jwt:Audience"],
+        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["CustomKeys:Jwt:Key"] ?? "default_key_which_is_at_least_32_chars_long"))
+    };
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = ctx =>
+        {
+            ctx.Token = ctx.Request.Cookies["postigo.invite"];
+            return Task.CompletedTask;
+        }
+    };
+});
+builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // IMPORTANT: enable CORS before authentication/authorization and before endpoints

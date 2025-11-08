@@ -1,6 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
-using Core;
+using Core.Users;
 using Core.Platforms;
 using Core.Organizations;
 

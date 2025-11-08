@@ -3,13 +3,24 @@ using System.IdentityModel.Tokens.Jwt;  // For JwtRegisteredClaimNames, JwtSecur
 using System.Security.Claims;           // For Claim
 using Microsoft.IdentityModel.Tokens;   // For SymmetricSecurityKey, SigningCredentials, SecurityAlgorithms
 using System.Text;
-using System.Security.Cryptography;                       // For Encoding.UTF8
+using System.Security.Cryptography;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Mvc;
 namespace Infrastructure;
 
 public class TokenService
 {
-    private readonly string _secretKey = "h6G8u3v9H1s7k2L4p0w8R3n5M2y1Z7Q4";
-    public string GenerateJwtToken(string email, string name, int expiresInMinutes)
+    private readonly IConfiguration _configuration;
+    private string GetJwtKey() => _configuration["CustomKeys:Jwt:Key"] ?? string.Empty;
+    private int GetJwtExpiryMinutes() => int.Parse(_configuration["CustomKeys:Jwt:ExpiryMinutes"] ?? "60");
+    private string GetJwtIssuer() => _configuration["CustomKeys:Jwt:Issuer"] ?? string.Empty;
+    private string GetJwtAudience() => _configuration["CustomKeys:Jwt:Audience"] ?? string.Empty;
+    public TokenService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+    public string GenerateJwtToken(string email, string name)
     {
         var claims = new[]
         {
@@ -18,14 +29,14 @@ public class TokenService
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_secretKey));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(GetJwtKey()));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var token = new JwtSecurityToken(
-            issuer: "your-app-name",
-            audience: "your-app-name",
+            issuer: GetJwtIssuer(),
+            audience: GetJwtAudience(),
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(expiresInMinutes),
+            expires: DateTime.UtcNow.AddMinutes(GetJwtExpiryMinutes()),
             signingCredentials: creds);
 
         return new JwtSecurityTokenHandler().WriteToken(token);
@@ -39,5 +50,21 @@ public class TokenService
             rng.GetBytes(randomBytes);
             return Convert.ToBase64String(randomBytes);
         }
+    }
+    public string HashPassword(string password)
+    {
+        var key = _configuration["CustomKeys:PasswordHashingKey"];
+        if (string.IsNullOrEmpty(password) || string.IsNullOrEmpty(key)) return string.Empty;
+        var hasher = new PasswordHasher<String>();
+        var hashedPassword = hasher.HashPassword(key, password);
+        return hashedPassword;
+    }
+    public bool VerifyPassword(string hashedPassword, string providedPassword)
+    {
+        var key = _configuration["CustomKeys:PasswordHashingKey"];
+        if (string.IsNullOrEmpty(hashedPassword) || string.IsNullOrEmpty(providedPassword) || string.IsNullOrEmpty(key)) return false;
+        var hasher = new PasswordHasher<String>();
+        var result = hasher.VerifyHashedPassword(key, hashedPassword, providedPassword);
+        return result == PasswordVerificationResult.Success;
     }
 }

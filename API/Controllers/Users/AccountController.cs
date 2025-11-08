@@ -3,26 +3,24 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 using Infrastructure;
-using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
-using Core;
-
+using Infrastructure.Repository;
+using Core.Users;
 namespace API.Controllers.Users
 {
     public class AccountController : ControllerBase
     {
         private TokenService tokenService;
-        private StoreContext _context;
+        private IUserRepo _userRepo;
         private readonly IConfiguration _configuration;
-        public AccountController(StoreContext storeContext, IConfiguration configuration)
+        public AccountController(IUserRepo userRepo, IConfiguration configuration)
         {
-            if (tokenService == null) tokenService = new TokenService();
-            _context = storeContext;
+            tokenService = new TokenService(configuration);
+            _userRepo = userRepo;
             _configuration = configuration;
         }
         // Step 1️⃣: Trigger Google Login
-        [HttpGet("signin")]
-        public IActionResult Login()
+        [HttpGet("signin-google")]
+        public IActionResult SignInWithGoogle()
         {
             var properties = new AuthenticationProperties
             {
@@ -42,73 +40,55 @@ namespace API.Controllers.Users
             {
                 return Forbid();
             }
+            return Redirect($"{_configuration["redirectUrls:frontend"]}/app");
+        }
+        [HttpPost("signup")]
+        public IActionResult SignUp([FromBody] SignUpDto signUpDto)
+        {
 
-            var email = result.Principal.FindFirst(ClaimTypes.Email)?.Value;
-            var name = result.Principal.FindFirst(ClaimTypes.Name)?.Value;
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(name)) return NotFound();
-            var accessToken = tokenService.GenerateJwtToken(email, name, expiresInMinutes: 15); // Short-lived
-            var refreshToken = tokenService.GenerateRefreshToken(); // Random string
+            switch (_userRepo.RegisterUser(signUpDto))
+            {
+                case Status.Unauthorized:
+                    return Unauthorized("This email is already registered");
+                case Status.NotFound:
+                    return BadRequest("Password must be at least 8 characters long");
+                case Status.Succeeded:
+                    return Ok("User Registered");
+                case Status.Failed:
+                    return BadRequest("Registration Failed");
+                default:
+                    return BadRequest();
+            }
+        }
+        [HttpPost("signin")]
+        public IActionResult SignIn([FromBody] SignInDto signInDto)
+        {
 
-            // Save refreshToken in database linked to user
-            //  await SaveRefreshTokenToDatabase(email, name, refreshToken);
+            switch (_userRepo.LoginUser(signInDto))
+            {
+                case Status.Unauthorized:
+                    return Unauthorized("Invalid credentials");
+                case Status.NotFound:
+                    return NotFound("User not found");
+                case Status.Succeeded:
+                    User user = _userRepo.GetUserByEmail(signInDto.Email)!;
+                    SetTokenCookie(tokenService.GenerateJwtToken(user.Email, user.FullName));
+                    return Ok("Login Successful");
+                default:
+                    return BadRequest();
+            }
+        }
 
-            // Set refresh token in HttpOnly secure cookie
-            Response.Cookies.Append("refreshToken", refreshToken, new CookieOptions
+        private void SetTokenCookie(string token)
+        {
+            var cookieOptions = new CookieOptions
             {
                 HttpOnly = true,
+                Expires = DateTime.UtcNow.AddMinutes(int.Parse(_configuration["CustomKeys:Jwt:ExpiryMinutes"] ?? "60")),
                 Secure = true,
-                SameSite = SameSiteMode.None,
-               // Domain = ".postigo.in",
-                Expires = DateTime.UtcNow.AddDays(30) // Example: 30 days validity
-            });
-
-            // Return access token to frontend
-            return Redirect($"{_configuration["redirectUrls:frontend"]}/app?token={accessToken}");
-
-            // Or redirect to home page after login:
-            // return RedirectToAction("Index", "Home");
+                SameSite = SameSiteMode.None
+            };
+            Response.Cookies.Append("_postigo.invite", token, cookieOptions);
         }
-        private async Task SaveRefreshTokenToDatabase(string email, string name, string refreshToken)
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
-
-            if (user != null)
-            {
-                user.RefreshToken = refreshToken;
-                user.RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(30); // Example: 30 days validity
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                // Optionally, create user if it doesn't exist
-                user = new User
-                {
-                    Email = email,
-                    FullName = name, // Or another source
-                    RefreshToken = refreshToken,
-                    RefreshTokenExpiryTime = DateTime.UtcNow.AddDays(30)
-                };
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        [HttpPost("refresh-token")]
-        public async Task<IActionResult> RefreshToken()
-        {
-            var refreshToken = Request.Cookies["refreshToken"];
-            if (string.IsNullOrEmpty(refreshToken))
-                return Unauthorized("No refresh token provided.");
-
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
-
-            if (user == null || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
-                return Unauthorized("Invalid or expired refresh token.");
-
-            var newAccessToken = tokenService.GenerateJwtToken(user.Email, user.FullName, 15);
-
-            return Ok(new { token = newAccessToken });
-        }
-
     }
 }

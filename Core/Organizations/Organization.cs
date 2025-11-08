@@ -1,8 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Core.Organizations;
 using Core.Platforms;
-namespace Core;
+namespace Core.Organizations;
 
 [Table("organizations")]
 public class Organization
