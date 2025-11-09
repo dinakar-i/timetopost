@@ -3,6 +3,7 @@ public enum Status
     Unauthorized,
     Forbid,
     NotFound,
+    NotValid,
     Authroized,
     Succeeded,
     Failed

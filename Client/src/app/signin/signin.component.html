@@ -4,10 +4,14 @@
     <h2>Sign In <i class="fa-solid fa-door-open"></i></h2>
     <form>
       <div class="form-group">
-        <input type="email" placeholder="Email" />
+        <input [(ngModel)]="email" type="email" placeholder="Email" />
       </div>
       <div class="form-group password-group">
-        <input type="{{ isPasswordVisible ? 'text' : 'password' }}" placeholder="Password" />
+        <input
+          [(ngModel)]="password"
+          type="{{ isPasswordVisible ? 'text' : 'password' }}"
+          placeholder="Password"
+        />
         <button type="button" (click)="togglePasswordVisibility()" class="toggle-password">
           @if(isPasswordVisible) {
           <i class="fa-solid fa-eye"></i>
@@ -16,12 +20,18 @@
           }
         </button>
       </div>
+      @if(showError) {
+      <div class="error-message">
+        <p>{{ errormessage }}</p>
+      </div>
+      }
       <div class="form-remember">
         <input type="checkbox" id="remember" />
         <label for="remember">Remember me</label>
       </div>
-      <button type="submit" class="signin-btn">Sign In</button>
-      <a href="#" style="cursor: pointer" class="forgot">Forgot password?</a>
+      <button type="submit" (click)="submitForm()" class="signin-btn">Sign In</button>
+      <a href="/signup" class="forgot">Create new account?</a>
+      <a href="#" class="forgot">Forgot password?</a>
     </form>
   </div>
 </div>

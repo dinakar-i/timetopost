@@ -4,16 +4,20 @@
     <h2>Sign Up <i class="fa-solid fa-door-open"></i></h2>
     <form>
       <div class="form-group">
-        <input type="name" placeholder="First Name" />
+        <input [(ngModel)]="firstname" type="name" placeholder="First Name" />
       </div>
       <div class="form-group">
-        <input type="name" placeholder="Last Name" />
+        <input [(ngModel)]="lastname" type="name" placeholder="Last Name" />
       </div>
       <div class="form-group">
-        <input type="email" placeholder="Email" />
+        <input [(ngModel)]="email" type="email" placeholder="Email" />
       </div>
       <div class="form-group password-group">
-        <input type="{{ isPasswordVisible ? 'text' : 'password' }}" placeholder="Password" />
+        <input
+          [(ngModel)]="password"
+          type="{{ isPasswordVisible ? 'text' : 'password' }}"
+          placeholder="Password"
+        />
         <button type="button" (click)="togglePasswordVisibility()" class="toggle-password">
           @if(isPasswordVisible) {
           <i class="fa-solid fa-eye"></i>
@@ -24,23 +28,29 @@
       </div>
       <div class="form-group password-group">
         <input
-          type="{{ isPasswordVisible ? 'text' : 'password' }}"
+          [(ngModel)]="confirmpassword"
+          type="{{ isConfirmPasswordVisible ? 'text' : 'password' }}"
           placeholder="Confirm Password"
         />
-        <button type="button" (click)="togglePasswordVisibility()" class="toggle-password">
-          @if(isPasswordVisible) {
+        <button type="button" (click)="toggleConfirmPasswordVisibility()" class="toggle-password">
+          @if(isConfirmPasswordVisible) {
           <i class="fa-solid fa-eye"></i>
           }@else {
           <i class="fa-solid fa-eye-slash"></i>
           }
         </button>
       </div>
+      @if(showError) {
+      <div class="error-message">
+        <p>{{ errormessage }}</p>
+      </div>
+      }
       <div class="form-remember">
         <input type="checkbox" id="remember" />
         <label for="remember">Remember me</label>
       </div>
-      <button type="submit" class="signin-btn">Sign Up</button>
-      <a routerLink="/signin" class="forgot" style="cursor: pointer">Already Have An Account?</a>
+      <button (click)="SignUp()" type="submit" class="signin-btn">Sign Up</button>
+      <a href="/signin" class="forgot">Already Have An Account?</a>
     </form>
   </div>
 </div>

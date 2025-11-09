@@ -21,8 +21,8 @@ namespace Infrastructure.Repository
         public Status RegisterUser(SignUpDto user)
         {
             if (user == null) return Status.Failed;
-            else if (UserExists(user.Email)) return Status.Unauthorized;
-            else if (user.Password.Length < 8) return Status.NotFound;
+            else if (!_tokenService.IsValidEmail(user.Email) || UserExists(user.Email)) return Status.Unauthorized;
+            else if (user.Password.Length < 8) return Status.NotValid;
             else
             {
 
@@ -32,7 +32,7 @@ namespace Infrastructure.Repository
                     FullName = user.FullName,
                     PasswordHash = _tokenService.HashPassword(user.Password),
                 };
-                if (string.IsNullOrEmpty(newUser.PasswordHash)) return Status.NotFound;
+                if (string.IsNullOrEmpty(newUser.PasswordHash)) return Status.NotValid;
                 _context.Users.Add(newUser);
             }
             _context.SaveChanges();
@@ -40,6 +40,7 @@ namespace Infrastructure.Repository
         }
         public Status LoginUser(SignInDto user)
         {
+            if (!_tokenService.IsValidEmail(user.Email)) return Status.Unauthorized;
             var existingUser = _context.Users.FirstOrDefault(u => u.Email == user.Email);
             if (existingUser == null) return Status.NotFound;
             bool isPasswordValid = _tokenService.VerifyPassword(existingUser.PasswordHash, user.Password);
@@ -50,7 +51,6 @@ namespace Infrastructure.Repository
         {
             return _context.Users
          .Include(u => u.OrganizationRoles)
-             .ThenInclude(or => or.Organization)
          .FirstOrDefault(u => u.Email == email);
         }
     }

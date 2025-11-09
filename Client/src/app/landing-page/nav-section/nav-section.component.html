@@ -10,8 +10,13 @@
     </a>
 
     <div class="nav-right">
+      @if(authserice.getUser()==null) {
       <a routerLink="/signin" class="btn btn-ghost">Sign in</a>
       <a routerLink="/signup" class="btn btn-primary">Sign up</a>
+      } @else {
+      <a class="btn btn-ghost">{{ authserice.getUser()?.fullName }}</a>
+      <a (click)="authserice.SignOut()" class="btn btn-primary">LogOut</a>
+      }
     </div>
   </div>
 </nav>

@@ -18,12 +18,6 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IOrganizationRepo, OrganizationRepo>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -32,7 +26,7 @@ builder.Services.AddSwaggerGen();
 var frontendOrigins = builder.Configuration
     .GetValue<string>("redirectUrls:frontend")?
     .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-    ?? new[] { "https://localhost:5129" };
+    ?? new[] { "https://postigo.in" };
 
 
 builder.Services.AddCors(options =>
@@ -91,6 +85,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             return Task.CompletedTask;
         }
     };
+
 });
 builder.Services.AddAuthorization();
 var app = builder.Build();

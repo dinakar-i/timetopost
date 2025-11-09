@@ -1,4 +1,3 @@
-using System;
 using System.IdentityModel.Tokens.Jwt;  // For JwtRegisteredClaimNames, JwtSecurityToken, JwtSecurityTokenHandler
 using System.Security.Claims;           // For Claim
 using Microsoft.IdentityModel.Tokens;   // For SymmetricSecurityKey, SigningCredentials, SecurityAlgorithms
@@ -6,7 +5,7 @@ using System.Text;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 namespace Infrastructure;
 
 public class TokenService
@@ -24,8 +23,8 @@ public class TokenService
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.Sub, email),
-            new Claim(JwtRegisteredClaimNames.UniqueName, name),
+            new Claim(ClaimTypes.Name, email),
+            new Claim(ClaimTypes.Actor, name),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
 
@@ -66,5 +65,14 @@ public class TokenService
         var hasher = new PasswordHasher<String>();
         var result = hasher.VerifyHashedPassword(key, hashedPassword, providedPassword);
         return result == PasswordVerificationResult.Success;
+    }
+
+    public bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+            return false;
+
+        string pattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+        return Regex.IsMatch(email, pattern, RegexOptions.IgnoreCase);
     }
 }
