@@ -6,25 +6,18 @@ import { CreatePostsComponent } from './CreatePost/create-posts.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { TermsPrivacyComponent } from './legal/terms-privacy/terms-privacy.component';
 import { SignupComponent } from './signup/signup.component';
+import { authguardGuard } from './guards/authguard/authguard-guard';
+import { AuthPageComponent } from './auth-page/auth-page.component';
+import { SigninComponent } from './signin/signin.component';
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // Redirect root
   { path: 'legal', component: TermsPrivacyComponent },
-  { path: 'dashboard', component: DashboardComponent },
-  { path: 'analytics', component: AnalyticsComponent },
-  { path: 'jobs', component: ScheduledjobsComponent },
-  { path: 'post', component: CreatePostsComponent },
-
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authguardGuard] },
+  { path: 'analytics', component: AnalyticsComponent, canActivate: [authguardGuard] },
+  { path: 'jobs', component: ScheduledjobsComponent, canActivate: [authguardGuard] },
+  { path: 'post', component: CreatePostsComponent, canActivate: [authguardGuard] },
   // Use loadComponent for a standalone component (lazy / standalone friendly)
-  {
-    path: 'app',
-    loadComponent: () => import('./auth-page/auth-page.component').then((m) => m.AuthPageComponent),
-  },
-  {
-    path: 'signin',
-    loadComponent: () => import('./signin/signin.component').then((m) => m.SigninComponent),
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
-  },
+  { path: 'app', component: AuthPageComponent, canDeactivate: [authguardGuard] },
+  { path: 'signin', component: SigninComponent, canDeactivate: [authguardGuard] },
+  { path: 'signup', component: SignupComponent, canDeactivate: [authguardGuard] },
 ];

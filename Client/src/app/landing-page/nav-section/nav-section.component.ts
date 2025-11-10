@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { environment } from '../../model/environment';
 import { Authservice } from '../../services/authservice';
+import { from } from 'rxjs';
 @Component({
   selector: 'app-nav-section',
   templateUrl: './nav-section.component.html',
@@ -13,4 +14,5 @@ import { Authservice } from '../../services/authservice';
 export class NavSectionComponent {
   public baseUrl = environment.apiUrl;
   public authserice = inject(Authservice);
+  public user$ = from(this.authserice.getUser());
 }

@@ -3,6 +3,7 @@ import { environment } from '../model/environment';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../model/User/User';
 import { Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,29 +12,47 @@ export class Authservice {
   http = inject(HttpClient);
   User: User | null = null;
   constructor(private router: Router) {}
+  private getUserSession() {
+    return sessionStorage.getItem('user');
+  }
+  private removeUserSession() {
+    sessionStorage.removeItem('user');
+  }
   setUser(user: User | null) {
     this.User = user;
     sessionStorage.setItem('user', JSON.stringify(user));
   }
-  getUser(): User | null {
-    if (this.User != null) return this.User;
-    const saved = sessionStorage.getItem('user');
-    if (saved) this.User = JSON.parse(saved);
+  async getUser(): Promise<User | null> {
+    const saved = this.getUserSession();
+    if (saved) {
+      this.User = JSON.parse(saved);
+    } else {
+      await this.getUserProfile();
+    }
+
     return this.User;
   }
-  loadUserProfile() {
-    this.http.get<User>(`${this.apiUrl}/users/profile`, { withCredentials: true }).subscribe({
-      next: (user) => {
-        console.log('User profile loaded:', user);
-        this.setUser(user);
-        this.router.navigate(['/']);
-      },
-      error: (error) => {
-        console.error('Error loading user profile:', error);
-        this.setUser(null);
-      },
-    });
+  private clearUserData() {
+    console.log('user date cleared');
+    this.User = null;
+    this.removeUserSession();
   }
+  async loadUserProfile() {
+    await this.getUserProfile();
+    if (this.User != null) this.router.navigate(['/']);
+  }
+  private async getUserProfile(): Promise<void> {
+    try {
+      const user = await firstValueFrom(
+        this.http.get<User>(`${this.apiUrl}/users/profile`, { withCredentials: true })
+      );
+      console.log('User data loaded');
+      this.setUser(user);
+    } catch {
+      this.setUser(null);
+    }
+  }
+
   SignIn(email: string, password: string) {
     return this.http.post<any>(
       `${this.apiUrl}/account/signin`,
@@ -48,13 +67,16 @@ export class Authservice {
       { withCredentials: true }
     );
   }
-  SignOut() {
-    if (this.getUser() == null) return;
-    this.http.delete(`${this.apiUrl}/account/signout`, { withCredentials: true }).subscribe({
-      next: () => {
-        sessionStorage.removeItem('user');
-        window.location.reload();
-      },
-    });
+  async SignOut() {
+    try {
+      await firstValueFrom(
+        this.http.delete(`${this.apiUrl}/account/signout`, { withCredentials: true })
+      );
+    } catch (err) {
+      console.error('SignOut failed', err);
+    } finally {
+      this.clearUserData();
+      window.location.reload();
+    }
   }
 }
