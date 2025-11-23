@@ -16,7 +16,6 @@ export const routes: Routes = [
   { path: 'analytics', component: AnalyticsComponent, canActivate: [authguardGuard] },
   { path: 'jobs', component: ScheduledjobsComponent, canActivate: [authguardGuard] },
   { path: 'post', component: CreatePostsComponent, canActivate: [authguardGuard] },
-  // Use loadComponent for a standalone component (lazy / standalone friendly)
   { path: 'app', component: AuthPageComponent, canDeactivate: [authguardGuard] },
   { path: 'signin', component: SigninComponent, canDeactivate: [authguardGuard] },
   { path: 'signup', component: SignupComponent, canDeactivate: [authguardGuard] },

@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Authservice } from '../services/authservice';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -19,6 +20,7 @@ export class SignupComponent {
   errormessage: string = 'Something went wrong! Please try again.';
   showError: boolean = false;
   authservice = inject(Authservice);
+  router = inject(Router);
   togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
@@ -26,7 +28,8 @@ export class SignupComponent {
     this.isConfirmPasswordVisible = !this.isConfirmPasswordVisible;
   }
   goBack(): void {
-    window.history.back();
+    //  window.history.back();
+    this.router.navigate(['/']);
   }
   showErrorMessage(message: string): void {
     this.errormessage = message;

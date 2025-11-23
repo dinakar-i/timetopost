@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Authservice } from '../services/authservice';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-signin',
   standalone: true,
@@ -13,13 +14,15 @@ export class SigninComponent {
   email: string = '';
   password: string = '';
   authservice = inject(Authservice);
+  router = inject(Router);
   errormessage: string = 'Something went wrong! Please try again.';
   showError: boolean = false;
   togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
   }
   goBack(): void {
-    window.history.back();
+    //  window.history.back();
+    this.router.navigate(['/']);
   }
   showErrorMessage(message: string): void {
     this.errormessage = message;

@@ -1,10 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Infrastructure;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.HttpOverrides;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Infrastructure.Platforms;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +15,8 @@ builder.Services.AddDbContext<StoreContext>(options =>
 });
 builder.Services.AddScoped<IUserRepo, UserRepo>();
 builder.Services.AddScoped<IOrganizationRepo, OrganizationRepo>();
+builder.Services.AddScoped<IInstagramPublishContent, InstagramPublishContent>();
+builder.Services.AddScoped<IInstagramUserProfile, InstagramUserProfile>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddControllers();
@@ -48,22 +49,6 @@ builder.Services.Configure<ForwardedHeadersOptions>(options =>
     options.KnownNetworks.Clear();
     options.KnownProxies.Clear();
 });
-
-// builder.Services.AddAuthentication(options =>
-// {
-//     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//     options.DefaultChallengeScheme = GoogleDefaults.AuthenticationScheme;
-// }).AddCookie(options =>
-// {
-//     options.Cookie.SameSite = SameSiteMode.None;
-//     options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-// }).AddGoogle(options =>
-// {
-//     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//     options.ClientId = builder.Configuration["Google:ClientId"] ?? "your-client-id";
-//     options.ClientSecret = builder.Configuration["Google:ClientSecret"] ?? "your-client-secret";
-//     options.CallbackPath = "/signin-google";
-// });
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
