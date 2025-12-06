@@ -12,4 +12,6 @@ import { Member } from '../../../model/Organization/Organization';
 })
 export class UserRowComponent {
   @Input() member!: Member;
+  @Input() isOwner: boolean = false;
+  @Input() isMe: boolean = false;
 }

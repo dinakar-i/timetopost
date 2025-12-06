@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { OrganizationListComponent } from './components/organization-list/organization-list.component';
+import { Authservice } from '../services/authservice';
 
 @Component({
   selector: 'app-organization',
@@ -7,4 +8,6 @@ import { OrganizationListComponent } from './components/organization-list/organi
   templateUrl: './organization.component.html',
   styleUrl: './organization.component.scss',
 })
-export class OrganizationComponent {}
+export class OrganizationComponent {
+  authservice = inject(Authservice);
+}

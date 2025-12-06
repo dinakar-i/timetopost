@@ -12,8 +12,8 @@
     "
   />
   <div style="padding-left: 40px">
-    <h2>User Name</h2>
-    <p>User Role</p>
+    <h2>{{ authservice.User?.fullName }}</h2>
+    <p>{{ authservice.User?.email }}</p>
   </div>
 </div>
 <app-organization-list> </app-organization-list>

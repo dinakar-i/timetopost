@@ -5,11 +5,19 @@
       {{ org.name }}
     </div>
 
+    @if(isOwner) {
     <button class="manage-btn"><i class="fa-solid fa-gear"></i> Manage</button>
     <button class="add-user-btn">+ Add User</button>
+    }
   </div>
 
   <div *ngIf="expanded" class="content">
-    <app-user-row *ngFor="let m of org.members" [member]="m"> </app-user-row>
+    <app-user-row
+      *ngFor="let m of org.members"
+      [member]="m"
+      [isOwner]="isOwner"
+      [isMe]="m.userId == authservice.User?.id"
+    >
+    </app-user-row>
   </div>
 </div>

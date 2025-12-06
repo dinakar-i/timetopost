@@ -15,6 +15,32 @@ namespace Infrastructure.Repository
         public object? GetUserOrganizations(int userid)
         {
             var organizations = _context.Organizations
+                .Where(o => o.Members.Any(m => m.UserId == userid))
+                .Select(o => new
+                {
+                    o.Id,
+                    o.Name,
+                    Members = o.Members.Select(m => new
+                    {
+                        m.UserId,
+                        m.User.FullName,
+                        m.Role
+                    }),
+                    Platforms = o.Platforms.Select(p => new
+                    {
+                        p.Id,
+                        p.Platform,
+                        p.AccessToken,
+                        p.TokenExpiry
+                    })
+                })
+                .ToList();
+
+            return organizations;
+        }
+        public object? GetOrganizationsofUser(int userid)
+        {
+            var organizations = _context.Organizations
                 .Where(o => o.Members.Any(m => m.UserId == userid && m.Role.ToLower() == OrganizationRole.Owner.ToString().ToLower()))
                 .Select(o => new
                 {
