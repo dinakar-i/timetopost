@@ -1,0 +1,35 @@
+.user-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  padding-left: 30px;
+  color: #e0e0e0;
+
+  .name {
+    font-weight: 600;
+    color: black;
+  }
+
+  .role {
+    background: #3e7bfa;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    color: white;
+  }
+
+  .action {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    &.edit {
+      color: #4caf50;
+    }
+
+    &.remove {
+      color: #e53935;
+    }
+  }
+}

@@ -9,6 +9,7 @@ import { SignupComponent } from './signup/signup.component';
 import { authguardGuard } from './guards/authguard/authguard-guard';
 import { AuthPageComponent } from './auth-page/auth-page.component';
 import { SigninComponent } from './signin/signin.component';
+import { OrganizationComponent } from './Organization/organization.component';
 export const routes: Routes = [
   { path: '', component: LandingPageComponent }, // Redirect root
   { path: 'legal', component: TermsPrivacyComponent },
@@ -19,4 +20,5 @@ export const routes: Routes = [
   { path: 'app', component: AuthPageComponent, canDeactivate: [authguardGuard] },
   { path: 'signin', component: SigninComponent, canDeactivate: [authguardGuard] },
   { path: 'signup', component: SignupComponent, canDeactivate: [authguardGuard] },
+  { path: 'organizations', component: OrganizationComponent, canActivate: [authguardGuard] },
 ];

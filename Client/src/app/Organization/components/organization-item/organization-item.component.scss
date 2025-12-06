@@ -1,0 +1,43 @@
+.organization-box {
+  border: 1px solid #3a3a3a;
+  background: white;
+  margin: 15px 0;
+  border-radius: 10px;
+  padding: 15px;
+  color: black;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+    }
+    .add-user-btn {
+      background: none;
+      border: none;
+      color: #4caf50;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+    .manage-btn {
+      background: none;
+      border: none;
+      color: #42a5f5;
+      cursor: pointer;
+
+      &:hover {
+        color: #90caf9;
+      }
+    }
+  }
+
+  .content {
+    margin-top: 10px;
+    padding-left: 20px;
+  }
+}

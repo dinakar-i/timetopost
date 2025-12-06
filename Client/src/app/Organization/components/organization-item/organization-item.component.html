@@ -1,0 +1,15 @@
+<div class="organization-box">
+  <div class="header" (click)="expanded = !expanded">
+    <div class="title">
+      <i class="fa-solid" [ngClass]="expanded ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+      {{ org.name }}
+    </div>
+
+    <button class="manage-btn"><i class="fa-solid fa-gear"></i> Manage</button>
+    <button class="add-user-btn">+ Add User</button>
+  </div>
+
+  <div *ngIf="expanded" class="content">
+    <app-user-row *ngFor="let m of org.members" [member]="m"> </app-user-row>
+  </div>
+</div>

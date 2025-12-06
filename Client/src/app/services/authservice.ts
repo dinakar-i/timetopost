@@ -38,18 +38,24 @@ export class Authservice {
     this.removeUserSession();
   }
   async loadUserProfile() {
-    await this.getUserProfile();
-    if (this.User != null) this.router.navigate(['/']);
+    const isDone = await this.getUserProfile();
+    console.log('isDone', isDone);
+    if (isDone) {
+      this.router.navigate(['/']);
+      console.log('User profile loaded successfully');
+    }
   }
-  private async getUserProfile(): Promise<void> {
+  private async getUserProfile(): Promise<boolean> {
     try {
       const user = await firstValueFrom(
         this.http.get<User>(`${this.apiUrl}/users/profile`, { withCredentials: true })
       );
       console.log('User data loaded');
       this.setUser(user);
+      return true;
     } catch {
       this.setUser(null);
+      return false;
     }
   }
 
