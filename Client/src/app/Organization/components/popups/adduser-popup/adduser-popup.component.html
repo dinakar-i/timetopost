@@ -1,0 +1,26 @@
+<div class="add-user-form">
+  <div class="form-field">
+    @if(!isForEditUser) {
+    <label>Email</label>
+    <input type="email" placeholder="Enter user email" [(ngModel)]="userEmail" />
+    }@else{
+    <label>Name</label>
+    <input type="text" [value]="userEmail" disabled style="cursor: not-allowed" />
+    }
+  </div>
+
+  <div class="form-field">
+    <label>Role</label>
+    <select [(ngModel)]="userRole">
+      <option value="Owner">Owner</option>
+      <option value="Editor">Editor</option>
+      <option value="Viewer">Viewer</option>
+    </select>
+  </div>
+
+  @if(isForEditUser) {
+  <button class="add-btn" (click)="editUser()">Save Changes</button>
+  }@else{
+  <button class="add-btn" (click)="addUser()">+ Add User</button>
+  }
+</div>

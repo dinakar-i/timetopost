@@ -3,6 +3,8 @@ import { UserRowComponent } from '../user-row/user-row.component';
 import { CommonModule } from '@angular/common';
 import { Organization } from '../../../model/Organization/Organization';
 import { Authservice } from '../../../services/authservice';
+import { MatDialog } from '@angular/material/dialog';
+import { AdduserPopupComponent } from '../popups/adduser-popup/adduser-popup.component';
 @Component({
   selector: 'app-organization-item',
   standalone: true,
@@ -15,6 +17,7 @@ export class OrganizationItemComponent implements OnInit {
   @Input() isOwner: boolean = false;
   expanded = true;
   authservice = inject(Authservice);
+  dialog = inject(MatDialog);
   ngOnInit(): void {
     this.isOwner = this.isImOwner();
   }
@@ -25,5 +28,15 @@ export class OrganizationItemComponent implements OnInit {
       if (member.userId === currentUserId && member.role.toLowerCase() === 'owner') return true;
     }
     return false;
+  }
+
+  openAddUserDialog() {
+    const dialogRef = this.dialog.open(AdduserPopupComponent, {
+      width: '480px',
+      maxWidth: '95vw',
+      autoFocus: true,
+      disableClose: false,
+      data: { organizationId: this.org.id, isForEditUser: false },
+    });
   }
 }

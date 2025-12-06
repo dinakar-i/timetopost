@@ -1,13 +1,18 @@
 <div class="organization-box">
-  <div class="header" (click)="expanded = !expanded">
+  <div class="header">
     <div class="title">
-      <i class="fa-solid" [ngClass]="expanded ? 'fa-chevron-down' : 'fa-chevron-right'"></i>
+      <i
+        (click)="expanded = !expanded"
+        class="fa-solid"
+        [ngClass]="expanded ? 'fa-chevron-down' : 'fa-chevron-right'"
+        style="cursor: pointer"
+      ></i>
       {{ org.name }}
     </div>
 
     @if(isOwner) {
     <button class="manage-btn"><i class="fa-solid fa-gear"></i> Manage</button>
-    <button class="add-user-btn">+ Add User</button>
+    <button class="add-user-btn" (click)="openAddUserDialog()">+ Add User</button>
     }
   </div>
 

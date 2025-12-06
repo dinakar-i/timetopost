@@ -6,7 +6,7 @@
   <span class="role">{{ member.role }}</span>
 
   @if(isOwner) {
-  <button class="action edit">
+  <button (click)="openEditUserDialog()" class="action edit">
     <i class="fa-solid fa-pen"></i>
   </button>
   <button class="action remove">
