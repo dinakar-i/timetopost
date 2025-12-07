@@ -32,7 +32,7 @@ export class Orgservice {
       return null;
     }
     return this.http.get<Organization[]>(
-      `${this.apiUrl}/organization/Organization/${this.authservice.User?.id}`,
+      `${this.apiUrl}/Organization/${this.authservice.User?.id}`,
       {
         withCredentials: true,
       }
