@@ -1,0 +1,47 @@
+.delete-dialog {
+  text-align: center;
+  padding: 24px 30px;
+  max-width: 400px;
+
+  h2 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 10px;
+    color: #1a1f36;
+  }
+
+  p {
+    font-size: 15px;
+    margin: 12px 0 25px;
+    color: #495057;
+  }
+
+  .icon-danger {
+    background: #ffebee;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+
+    .trash {
+      font-size: 42px;
+      color: #d32f2f;
+    }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+
+    button {
+      padding: 8px 22px;
+      font-size: 15px;
+      border-radius: 8px;
+      font-weight: 500;
+    }
+  }
+}

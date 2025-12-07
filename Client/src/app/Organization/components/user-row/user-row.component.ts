@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Member } from '../../../model/Organization/Organization';
 import { MatDialog } from '@angular/material/dialog';
 import { AdduserPopupComponent } from '../popups/adduser-popup/adduser-popup.component';
+import { DeleteuserPopupComponent } from '../popups/deleteuser-popup/deleteuser-popup.component';
 
 @Component({
   selector: 'app-user-row',
@@ -29,6 +30,20 @@ export class UserRowComponent {
         userRole: this.member.role,
         isForEditUser: true,
       },
+    });
+  }
+  openDeleteUserDialog() {
+    const dialogRef = this.dialog.open(DeleteuserPopupComponent, {
+      width: '480px',
+      maxWidth: '95vw',
+      data: {
+        userFullName: this.member.fullName,
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === true) {
+        console.log(`Deleting user with ID: ${this.member.userId}`);
+      }
     });
   }
 }

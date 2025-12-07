@@ -1,0 +1,16 @@
+<div class="delete-dialog">
+  <div class="icon-danger">
+    <i class="fa-solid fa-trash-can trash"></i>
+  </div>
+
+  <h2>Remove User?</h2>
+  <p>
+    Are you sure you want to remove <b> {{ data.userFullName }}</b> from this organization? This
+    action cannot be undone.
+  </p>
+
+  <div class="actions">
+    <button mat-stroked-button color="primary" (click)="cancel()">Cancel</button>
+    <button mat-raised-button color="warn" (click)="confirmDelete()">Delete</button>
+  </div>
+</div>
