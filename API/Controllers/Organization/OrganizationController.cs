@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers.Organization
 {
     [Authorize]
-    [Route("organization/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class OrganizationController : ControllerBase
     {
@@ -47,15 +47,53 @@ namespace API.Controllers.Organization
                     return NotFound();
             }
         }
+        [HttpPost("adduser")]
+        public IActionResult AddUserToOrganization(
+           [FromQuery] int userId,
+           [FromQuery] int organizationId,
+           [FromQuery] string role,
+           [FromQuery] int ownerId)
+        {
+            var res = _organization.AddUserToOrganization(organizationId, userId, role, ownerId);
+            if (!res.Success)
+            {
+                switch (res.Error)
+                {
+                    case Status.NotFound:
+                        return NotFound("User or Organization not found");
+                    case Status.Forbid:
+                        return Forbid();
+                    case Status.Failed:
+                        return BadRequest("User is already a member of the organization");
+                    default:
+                        return BadRequest("Failed to add user to organization");
+                }
+            }
+            return Ok(res.Data);
+        }
+        [HttpPut("updaterole")]
+        public IActionResult UpdateUserRoleInOrganization(
+           [FromQuery] int userId,
+           [FromQuery] int organizationId,
+           [FromQuery] string newRole,
+           [FromQuery] int ownerId)
+        {
+            switch (_organization.UpdateUserRoleInOrganization(organizationId, userId, newRole, ownerId))
+            {
+                case Status.Succeeded:
+                    return Ok("User Role Updated");
+                case Status.Forbid:
+                    return Forbid();
+                default:
+                    return NotFound();
+            }
+        }
         // [HttpGet("{organizationId}/role/{userId}")]
         [HttpGet("userrole")]
         public UserOrganizationRole? GetUserRoleInOrganization(int organizationId, int userId)
         {
             return _organization.GetUserRoleInOrganization(organizationId, userId);
         }
-
-
-
 
     }
 }
