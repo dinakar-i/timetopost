@@ -4,10 +4,11 @@ namespace Infrastructure.Repository
     public class OrganizationRepo : IOrganizationRepo
     {
         private readonly StoreContext _context;
-
-        public OrganizationRepo(StoreContext context)
+        private readonly IUserRepo _userRepo;
+        public OrganizationRepo(StoreContext context, IUserRepo userRepo)
         {
             _context = context;
+            _userRepo = userRepo;
         }
 
         // Repository methods for Organization entity
@@ -95,6 +96,45 @@ namespace Infrastructure.Repository
         {
             return _context.UserOrganizationRoles
         .FirstOrDefault(m => m.OrganizationId == organizationId && m.UserId == userId);
+        }
+
+
+        public AddUserResult AddUserToOrganization(int organizationId, int userId, string role, int ownerId)
+        {
+            if (!_userRepo.UserExists(userId)) return new AddUserResult(false, null!, Status.NotFound);
+            var ownerRole = GetUserRoleInOrganization(organizationId, ownerId);
+            if (ownerRole == null || !ownerRole.Role.ToLower().Equals(OrganizationRole.Owner.ToString().ToLower())) return new AddUserResult(false, null!, Status.Forbid);
+            var existingMember = _context.UserOrganizationRoles
+                .FirstOrDefault(m => m.OrganizationId == organizationId && m.UserId == userId);
+            if (existingMember != null) return new AddUserResult(false, null!, Status.Failed);
+            if (!CommonService.IsValidRole(role)) return new AddUserResult(false, null!, Status.NotValid);
+            var userOrganizationRole = new UserOrganizationRole
+            {
+                OrganizationId = organizationId,
+                UserId = userId,
+                Role = role
+            };
+            _context.UserOrganizationRoles.Add(userOrganizationRole);
+            _context.SaveChanges();
+            return new AddUserResult(true, new
+            {
+                userId,
+                fullName = _userRepo.GetUserById(userId)?.FullName,
+                role
+            }, null);
+        }
+        public Status UpdateUserRoleInOrganization(int organizationId, int userId, string newRole, int ownerId)
+        {
+            if (!_userRepo.UserExists(userId)) return Status.NotFound;
+            var ownerRole = GetUserRoleInOrganization(organizationId, ownerId);
+            if (ownerRole == null || !ownerRole.Role.ToLower().Equals(OrganizationRole.Owner.ToString().ToLower())) return Status.Forbid;
+            var member = _context.UserOrganizationRoles
+                .FirstOrDefault(m => m.OrganizationId == organizationId && m.UserId == userId);
+            if (member == null) return Status.NotFound;
+            if (!CommonService.IsValidRole(newRole)) return Status.Forbid;
+            member.Role = newRole;
+            _context.SaveChanges();
+            return Status.Succeeded;
         }
     }
 }

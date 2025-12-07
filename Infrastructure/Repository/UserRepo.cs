@@ -18,6 +18,10 @@ namespace Infrastructure.Repository
         {
             return _context.Users.Any(u => u.Email == email);
         }
+        public bool UserExists(int userId)
+        {
+            return _context.Users.Any(u => u.Id == userId);
+        }
         public Status RegisterUser(SignUpDto user)
         {
             if (user == null) return Status.Failed;
@@ -52,6 +56,12 @@ namespace Infrastructure.Repository
             return _context.Users
          .Include(u => u.OrganizationRoles)
          .FirstOrDefault(u => u.Email == email);
+        }
+        public User? GetUserById(int userId)
+        {
+            return _context.Users
+         .Include(u => u.OrganizationRoles)
+         .FirstOrDefault(u => u.Id == userId);
         }
     }
 }
