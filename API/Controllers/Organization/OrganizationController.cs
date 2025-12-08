@@ -49,12 +49,12 @@ namespace API.Controllers.Organization
         }
         [HttpPost("adduser")]
         public IActionResult AddUserToOrganization(
-           [FromQuery] int userId,
+           [FromQuery] string userEmail,
            [FromQuery] int organizationId,
            [FromQuery] string role,
            [FromQuery] int ownerId)
         {
-            var res = _organization.AddUserToOrganization(organizationId, userId, role, ownerId);
+            var res = _organization.AddUserToOrganization(organizationId, userEmail, role, ownerId);
             if (!res.Success)
             {
                 switch (res.Error)

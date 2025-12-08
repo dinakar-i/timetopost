@@ -38,4 +38,24 @@ export class Orgservice {
       }
     );
   }
+  public addUserToOrganization(
+    userEmail: string,
+    userRole: string,
+    organizationId: number,
+    ownerId: number
+  ): Observable<any> {
+    return this.http.post(
+      `${this.apiUrl}/Organization/adduser`,
+      {}, // body
+      {
+        params: {
+          userEmail,
+          organizationId,
+          role: userRole,
+          ownerId,
+        },
+        withCredentials: true, // correct position
+      }
+    );
+  }
 }

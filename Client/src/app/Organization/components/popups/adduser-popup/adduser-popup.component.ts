@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-adduser-popup',
   imports: [CommonModule, FormsModule],
@@ -13,6 +13,7 @@ export class AdduserPopupComponent {
   userRole: string = 'Viewer';
   isForEditUser: boolean = false;
   data = inject(MAT_DIALOG_DATA);
+  dialogRef = inject(MatDialogRef<AdduserPopupComponent>);
   constructor() {
     this.isForEditUser = this.data?.isForEditUser || false;
     if (this.isForEditUser) {
@@ -21,11 +22,10 @@ export class AdduserPopupComponent {
     }
   }
   addUser() {
-    // Logic to add user to organization
-    console.log(`Adding user with email: ${this.userEmail} and role: ${this.userRole}`);
+    this.dialogRef.close({ userEmail: this.userEmail, userRole: this.userRole });
   }
   editUser() {
     // Logic to edit user role in organization
-    console.log(`Editing user with email: ${this.userEmail} to role: ${this.userRole}`);
+    //this.orgservice.editUser(this.userEmail, this.userRole);
   }
 }

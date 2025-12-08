@@ -99,9 +99,10 @@ namespace Infrastructure.Repository
         }
 
 
-        public AddUserResult AddUserToOrganization(int organizationId, int userId, string role, int ownerId)
+        public AddUserResult AddUserToOrganization(int organizationId, string userEmail, string role, int ownerId)
         {
-            if (!_userRepo.UserExists(userId)) return new AddUserResult(false, null!, Status.NotFound);
+            if (!_userRepo.UserExists(userEmail)) return new AddUserResult(false, null!, Status.NotFound);
+            var userId = _userRepo.GetUserByEmail(userEmail)!.Id;
             var ownerRole = GetUserRoleInOrganization(organizationId, ownerId);
             if (ownerRole == null || !ownerRole.Role.ToLower().Equals(OrganizationRole.Owner.ToString().ToLower())) return new AddUserResult(false, null!, Status.Forbid);
             var existingMember = _context.UserOrganizationRoles
