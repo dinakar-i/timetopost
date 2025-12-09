@@ -128,7 +128,7 @@ namespace Infrastructure.Repository
         {
             if (!_userRepo.UserExists(userId)) return Status.NotFound;
             var ownerRole = GetUserRoleInOrganization(organizationId, ownerId);
-            if (ownerRole == null || !ownerRole.Role.ToLower().Equals(OrganizationRole.Owner.ToString().ToLower())) return Status.Forbid;
+            if (ownerRole == null || !ownerRole.Role.ToLower().Equals(OrganizationRole.Owner.ToString().ToLower()) || userId == ownerId) return Status.Forbid;
             var member = _context.UserOrganizationRoles
                 .FirstOrDefault(m => m.OrganizationId == organizationId && m.UserId == userId);
             if (member == null) return Status.NotFound;
