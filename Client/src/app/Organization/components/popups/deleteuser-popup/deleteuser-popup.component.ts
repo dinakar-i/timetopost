@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { MatDialogRef } from '@angular/material/dialog';
 @Component({
   selector: 'app-deleteuser-popup',
   templateUrl: './deleteuser-popup.component.html',
@@ -8,6 +8,11 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class DeleteuserPopupComponent {
   data = inject(MAT_DIALOG_DATA);
-  cancel() {}
-  confirmDelete() {}
+  dialogRef = inject(MatDialogRef<DeleteuserPopupComponent>);
+  cancel() {
+    this.dialogRef.close(false);
+  }
+  confirmDelete() {
+    this.dialogRef.close(true);
+  }
 }

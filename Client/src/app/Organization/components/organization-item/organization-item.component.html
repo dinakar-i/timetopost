@@ -19,6 +19,7 @@
   <div *ngIf="expanded" class="content">
     <app-user-row
       *ngFor="let m of org.members"
+      [organization]="org"
       [member]="m"
       [isOwner]="isOwner"
       [isMe]="m.userId == authservice.User?.id"

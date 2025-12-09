@@ -58,4 +58,38 @@ export class Orgservice {
       }
     );
   }
+  public editUserToOrganization(
+    userId: number,
+    userRole: string,
+    organizationId: number,
+    ownerId: number
+  ): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/Organization/updaterole`,
+      {}, // body
+      {
+        params: {
+          userId,
+          organizationId,
+          newRole: userRole,
+          ownerId,
+        },
+        withCredentials: true, // correct position
+      }
+    );
+  }
+  public deleteUserToOrganization(
+    userId: number,
+    organizationId: number,
+    ownerId: number
+  ): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/Organization/deleteuser`, {
+      params: {
+        userId,
+        organizationId,
+        ownerId,
+      },
+      withCredentials: true, // correct position
+    });
+  }
 }

@@ -15,7 +15,7 @@ import { Orgservice } from '../../../services/organization/orgservice';
 })
 export class OrganizationItemComponent implements OnInit {
   @Input() org!: Organization;
-  @Input() isOwner: boolean = false;
+  isOwner: boolean = false;
   expanded = true;
   authservice = inject(Authservice);
   dialog = inject(MatDialog);

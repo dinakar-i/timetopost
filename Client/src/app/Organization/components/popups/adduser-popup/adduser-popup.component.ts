@@ -22,10 +22,17 @@ export class AdduserPopupComponent {
     }
   }
   addUser() {
-    this.dialogRef.close({ userEmail: this.userEmail, userRole: this.userRole });
+    this.dialogRef.close({
+      userEmail: this.userEmail,
+      userRole: this.userRole,
+    });
   }
   editUser() {
     // Logic to edit user role in organization
-    //this.orgservice.editUser(this.userEmail, this.userRole);
+    this.dialogRef.close({
+      userId: this.data?.userId,
+      userRole: this.userRole,
+      organizationId: this.data?.organizationId,
+    });
   }
 }

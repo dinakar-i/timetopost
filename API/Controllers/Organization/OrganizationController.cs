@@ -31,7 +31,7 @@ namespace API.Controllers.Organization
             return Ok(members);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("deleteuser")]
         public IActionResult DeleteUserFromOrganaization(
            [FromQuery] int userId,
            [FromQuery] int organizationId,
@@ -40,7 +40,7 @@ namespace API.Controllers.Organization
             switch (_organization.DeleteUserFromOrganaization(userId, organizationId, ownerId))
             {
                 case Status.Succeeded:
-                    return Ok("User Deleted");
+                    return Ok(new { message = "User deleted successfully" });
                 case Status.Forbid:
                     return Forbid();
                 default:
@@ -81,7 +81,7 @@ namespace API.Controllers.Organization
             switch (_organization.UpdateUserRoleInOrganization(organizationId, userId, newRole, ownerId))
             {
                 case Status.Succeeded:
-                    return Ok("User Role Updated");
+                    return Ok(new { message = "User role updated successfully" });
                 case Status.Forbid:
                     return Forbid();
                 default:
