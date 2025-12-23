@@ -41,8 +41,7 @@ export class Orgservice {
   public addUserToOrganization(
     userEmail: string,
     userRole: string,
-    organizationId: number,
-    ownerId: number
+    organizationId: number
   ): Observable<any> {
     return this.http.post(
       `${this.apiUrl}/Organization/adduser`,
@@ -52,7 +51,6 @@ export class Orgservice {
           userEmail,
           organizationId,
           role: userRole,
-          ownerId,
         },
         withCredentials: true, // correct position
       }
@@ -61,8 +59,7 @@ export class Orgservice {
   public editUserToOrganization(
     userId: number,
     userRole: string,
-    organizationId: number,
-    ownerId: number
+    organizationId: number
   ): Observable<any> {
     return this.http.put(
       `${this.apiUrl}/Organization/updaterole`,
@@ -72,22 +69,16 @@ export class Orgservice {
           userId,
           organizationId,
           newRole: userRole,
-          ownerId,
         },
         withCredentials: true, // correct position
       }
     );
   }
-  public deleteUserToOrganization(
-    userId: number,
-    organizationId: number,
-    ownerId: number
-  ): Observable<any> {
+  public deleteUserToOrganization(userId: number, organizationId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/Organization/deleteuser`, {
       params: {
         userId,
         organizationId,
-        ownerId,
       },
       withCredentials: true, // correct position
     });

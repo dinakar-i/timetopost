@@ -39,12 +39,7 @@ export class UserRowComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.orgservice
-          .editUserToOrganization(
-            result.userId,
-            result.userRole,
-            result.organizationId,
-            this.authservice.User?.id || -1
-          )
+          .editUserToOrganization(result.userId, result.userRole, result.organizationId)
           .subscribe({
             next: () => {
               this.member.role = result.userRole;
@@ -67,11 +62,7 @@ export class UserRowComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === true) {
         this.orgservice
-          .deleteUserToOrganization(
-            this.member.userId,
-            this.organization.id,
-            this.authservice.User?.id || -1
-          )
+          .deleteUserToOrganization(this.member.userId, this.organization.id)
           .subscribe({
             next: () => {
               this.organization.members = this.organization.members.filter(

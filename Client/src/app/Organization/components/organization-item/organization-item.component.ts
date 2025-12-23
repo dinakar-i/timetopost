@@ -44,12 +44,7 @@ export class OrganizationItemComponent implements OnInit {
       if (result) {
         console.log('Add User Dialog result:', result);
         this.orgservice
-          .addUserToOrganization(
-            result.userEmail,
-            result.userRole,
-            this.org.id,
-            this.authservice.User?.id || 0
-          )
+          .addUserToOrganization(result.userEmail, result.userRole, this.org.id)
           .subscribe({
             next: (newMember) => {
               this.org.members.push(newMember);

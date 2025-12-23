@@ -19,10 +19,11 @@ public class TokenService
     {
         _configuration = configuration;
     }
-    public string GenerateJwtToken(string email, string name)
+    public string GenerateJwtToken(int userid, string email, string name)
     {
         var claims = new[]
         {
+            new Claim(ClaimTypes.NameIdentifier, userid.ToString()),
             new Claim(ClaimTypes.Name, email),
             new Claim(ClaimTypes.Actor, name),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
