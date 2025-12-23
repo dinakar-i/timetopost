@@ -1,4 +1,4 @@
-using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,7 @@ namespace API.Controllers.Users
         [HttpGet("profile")]
         public IActionResult GetUserProfile()
         {
-            var userEmail = User?.Identity?.Name;
+            var userEmail = User?.FindFirst(ClaimTypes.Name)?.Value;
             if (string.IsNullOrEmpty(userEmail))
             {
                 return Unauthorized(userEmail);

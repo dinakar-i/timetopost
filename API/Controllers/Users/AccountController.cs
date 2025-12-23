@@ -60,7 +60,7 @@ namespace API.Controllers.Users
                     return BadRequest("Registration Failed");
                 case Status.Succeeded:
                     User user = _userRepo.GetUserByEmail(signUpDto.Email)!;
-                    SetTokenCookie(tokenService.GenerateJwtToken(user.Email, user.FullName));
+                    SetTokenCookie(tokenService.GenerateJwtToken(user.Id, user.Email, user.FullName));
                     return Ok(new { message = "User Registered" });
                 default:
                     return BadRequest();
@@ -78,7 +78,7 @@ namespace API.Controllers.Users
                     return NotFound("User not found");
                 case Status.Succeeded:
                     User user = _userRepo.GetUserByEmail(signInDto.Email)!;
-                    SetTokenCookie(tokenService.GenerateJwtToken(user.Email, user.FullName));
+                    SetTokenCookie(tokenService.GenerateJwtToken(user.Id, user.Email, user.FullName));
                     return Ok(new { message = "Login successfully" });
                 default:
                     return BadRequest();

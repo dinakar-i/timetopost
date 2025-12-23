@@ -1,8 +1,8 @@
+using System.Security.Claims;
 using Core.Organizations;
 using Infrastructure.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace API.Controllers.Organization
 {
     [Authorize]
@@ -34,9 +34,9 @@ namespace API.Controllers.Organization
         [HttpDelete("deleteuser")]
         public IActionResult DeleteUserFromOrganaization(
            [FromQuery] int userId,
-           [FromQuery] int organizationId,
-           [FromQuery] int ownerId)
+           [FromQuery] int organizationId)
         {
+            var ownerId = int.Parse(User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "-1");
             switch (_organization.DeleteUserFromOrganaization(userId, organizationId, ownerId))
             {
                 case Status.Succeeded:
@@ -51,9 +51,9 @@ namespace API.Controllers.Organization
         public IActionResult AddUserToOrganization(
            [FromQuery] string userEmail,
            [FromQuery] int organizationId,
-           [FromQuery] string role,
-           [FromQuery] int ownerId)
+           [FromQuery] string role)
         {
+            var ownerId = int.Parse(User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "-1");
             var res = _organization.AddUserToOrganization(organizationId, userEmail, role, ownerId);
             if (!res.Success)
             {
@@ -75,9 +75,9 @@ namespace API.Controllers.Organization
         public IActionResult UpdateUserRoleInOrganization(
            [FromQuery] int userId,
            [FromQuery] int organizationId,
-           [FromQuery] string newRole,
-           [FromQuery] int ownerId)
+           [FromQuery] string newRole)
         {
+            var ownerId = int.Parse(User?.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? "-1");
             switch (_organization.UpdateUserRoleInOrganization(organizationId, userId, newRole, ownerId))
             {
                 case Status.Succeeded:
