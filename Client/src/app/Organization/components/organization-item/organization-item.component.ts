@@ -1,11 +1,12 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { UserRowComponent } from '../user-row/user-row.component';
 import { CommonModule } from '@angular/common';
-import { Member, Organization } from '../../../model/Organization/Organization';
+import { Organization } from '../../../model/Organization/Organization';
 import { Authservice } from '../../../services/authservice';
 import { MatDialog } from '@angular/material/dialog';
 import { AdduserPopupComponent } from '../popups/adduser-popup/adduser-popup.component';
 import { Orgservice } from '../../../services/organization/orgservice';
+import { ManageOrganizationComponent } from '../popups/manage-organization/manage-organization.component';
 @Component({
   selector: 'app-organization-item',
   standalone: true,
@@ -54,6 +55,17 @@ export class OrganizationItemComponent implements OnInit {
             },
           });
       }
+    });
+  }
+  openManageOrganizationDialog() {
+    const dialogRef = this.dialog.open(ManageOrganizationComponent, {
+      width: '480px',
+      maxWidth: '95vw',
+      autoFocus: true,
+      disableClose: false,
+      data: {
+         organization: this.org,
+      },
     });
   }
 }

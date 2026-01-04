@@ -47,7 +47,7 @@ export function createNewDraft(platform: Platform = 'Instagram'): PostDraft {
     id: 'D-' + nanoid(),
     platform,
     type: POST_TYPES[platform][0],
-    caption: '24/7 🚨.Worst Raa//fire 🔥 #biggBoss #sessoion6',
+    caption: '',
     images: [],
     date: null,
     time: '',

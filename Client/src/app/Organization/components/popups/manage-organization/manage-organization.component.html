@@ -1,0 +1,54 @@
+<div class="manage-container">
+  <header class="dialog-header">
+    <div>
+      <h2>Manage Platforms</h2>
+      <p class="subtitle">Organization: <strong>{{ organization.name }}</strong></p>
+    </div>
+    <button class="close-icon-btn" (click)="close()">&times;</button>
+  </header>
+
+  <main class="dialog-content">
+    
+    <section class="platform-section">
+      <h3 class="section-title">Connected Accounts ({{ organization.platforms.length }})</h3>
+      
+      <div class="connected-scroll-container">
+        <div class="empty-state" *ngIf="organization.platforms.length === 0">
+          No social media platforms connected yet.
+        </div>
+
+        <div class="platform-card" *ngFor="let p of organization.platforms">
+          <div class="platform-info">
+            <div class="platform-avatar">{{ p.platform.charAt(0) }}</div>
+            <div class="platform-details">
+              <span class="name">{{ p.platform }}</span>
+              <span class="status" [class.expired]="isExpired(p.tokenExpiry)">
+                {{ isExpired(p.tokenExpiry) ? 'Token Expired' : 'Active Connection' }}
+              </span>
+            </div>
+          </div>
+          <button class="remove-action" (click)="removePlatform(p.id)">Disconnect</button>
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider" />
+
+    <section class="platform-section">
+      <h3 class="section-title">Add New Platform</h3>
+      <div class="add-grid">
+        <button 
+          class="add-button" 
+          *ngFor="let opt of availableOptions" 
+          (click)="addPlatform(opt.name)">
+         <i class="fa-brands {{opt.icon}}"></i>
+          <span>{{ opt.name }}</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="dialog-footer">
+    <button class="primary-btn" (click)="close()">Save & Close</button>
+  </footer>
+</div>

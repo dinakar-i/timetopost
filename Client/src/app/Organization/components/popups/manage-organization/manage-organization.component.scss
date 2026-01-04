@@ -1,0 +1,227 @@
+/* --- Variables & Theme --- */
+$primary-color: #3182ce;
+$danger-color: #e53e3e;
+$success-color: #48bb78;
+$border-color: #edf2f7;
+$text-main: #2d3748;
+$text-muted: #718096;
+$bg-light: #f8fafc;
+
+.manage-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden; // Keeps corners rounded
+
+  /* --- Header --- */
+  .dialog-header {
+    padding: 24px 24px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: $text-main;
+    }
+
+    .subtitle {
+      margin: 4px 0 0;
+      font-size: 0.85rem;
+      color: $text-muted;
+      strong { color: $text-main; }
+    }
+
+    .close-icon-btn {
+      background: none;
+      border: none;
+      font-size: 28px;
+      line-height: 1;
+      color: $text-muted;
+      cursor: pointer;
+      transition: color 0.2s;
+      &:hover { color: $text-main; }
+    }
+  }
+
+  /* --- Body Content --- */
+  .dialog-content {
+    padding: 0 24px;
+    
+    .section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: $text-muted;
+      margin-bottom: 12px;
+    }
+  }
+
+  /* --- Scrollable Connected Section --- */
+  .connected-scroll-container {
+    max-height: 240px; // Limits height to make it scrollable
+    overflow-y: auto;
+    padding-right: 8px; // Space for scrollbar
+    margin-bottom: 10px;
+
+    .empty-state {
+      padding: 20px;
+      text-align: center;
+      background: $bg-light;
+      border-radius: 8px;
+      color: $text-muted;
+      font-size: 0.9rem;
+      border: 1px dashed $border-color;
+    }
+
+    /* Custom Scrollbar Styling */
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #cbd5e0;
+      border-radius: 10px;
+      &:hover { background: #a0aec0; }
+    }
+  }
+
+  /* --- Platform Card Design --- */
+  .platform-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid $border-color;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    transition: transform 0.1s, box-shadow 0.1s;
+
+    &:hover {
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-color: darken($border-color, 5%);
+    }
+
+    .platform-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .platform-avatar {
+        width: 36px;
+        height: 36px;
+        background: $primary-color;
+        color: white;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1.1rem;
+      }
+
+      .platform-details {
+        display: flex;
+        flex-direction: column;
+
+        .name {
+          font-size: 0.95rem;
+          font-weight: 600;
+          color: $text-main;
+        }
+
+        .status {
+          font-size: 0.75rem;
+          font-weight: 500;
+          color: $success-color;
+          &.expired { color: $danger-color; }
+        }
+      }
+    }
+
+    .remove-action {
+      background: transparent;
+      border: none;
+      color: $text-muted;
+      font-size: 0.8rem;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 4px 8px;
+      border-radius: 4px;
+      
+      &:hover {
+        color: $danger-color;
+        background: #fff5f5;
+      }
+    }
+  }
+
+  /* --- Add Platform Grid --- */
+  .add-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // 2 columns
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .add-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px;
+    background: #fff;
+    border: 1px dashed $border-color;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: $text-main;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    i { font-size: 1.1rem; }
+
+    &:hover {
+      border-color: $primary-color;
+      background: #ebf8ff;
+      color: $primary-color;
+    }
+  }
+
+  .divider {
+    border: 0;
+    border-top: 1px solid $border-color;
+    margin: 16px 0;
+  }
+
+  /* --- Footer --- */
+  .dialog-footer {
+    padding: 16px 24px 24px;
+    background: $bg-light;
+
+    .primary-btn {
+      width: 100%;
+      padding: 12px;
+      background: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+
+      &:hover {
+        background: darken($primary-color, 10%);
+      }
+    }
+  }
+}

@@ -1,29 +1,20 @@
 <div class="organization-box">
   <div class="header">
     <div class="title">
-      <i
-        (click)="expanded = !expanded"
-        class="fa-solid"
-        [ngClass]="expanded ? 'fa-chevron-down' : 'fa-chevron-right'"
-        style="cursor: pointer"
-      ></i>
+      <i (click)="expanded = !expanded" class="fa-solid" [ngClass]="expanded ? 'fa-chevron-down' : 'fa-chevron-right'"
+        style="cursor: pointer"></i>
       {{ org.name }}
     </div>
 
     @if(isOwner) {
-    <button class="manage-btn"><i class="fa-solid fa-gear"></i> Manage</button>
+    <button class="manage-btn" (click)="openManageOrganizationDialog()"><i class="fa-solid fa-gear"></i> Manage</button>
     <button class="add-user-btn" (click)="openAddUserDialog()">+ Add User</button>
     }
   </div>
 
   <div *ngIf="expanded" class="content">
-    <app-user-row
-      *ngFor="let m of org.members"
-      [organization]="org"
-      [member]="m"
-      [isOwner]="isOwner"
-      [isMe]="m.userId == authservice.User?.id"
-    >
+    <app-user-row *ngFor="let m of org.members" [organization]="org" [member]="m" [isOwner]="isOwner"
+      [isMe]="m.userId == authservice.User?.id">
     </app-user-row>
   </div>
 </div>
